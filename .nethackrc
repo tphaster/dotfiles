@@ -1,0 +1,25 @@
+##
+# .nethackrc -- Nethack configuration file.
+#
+#  Author:      Tomasz Pieczerak <tphaster gmail.com>
+#  Last Change: Fri, 24 Jun 2011 14:52:16 CEST
+##
+
+OPTIONS=name:TPhaster
+OPTIONS=dogname:Katsu, catname:Shinu, horsename:Seishin, fruit:pineapple
+
+OPTIONS=windowtype:tty, color, msghistory:30, number_pad, timed_delay, mail
+OPTIONS=nostandout, nonull, use_inverse, DECgraphics, noIBMgraphics, noignintr
+
+OPTIONS=verbose, news, legacy, splash_screen, scores:3 t/3 a/o, notoptenwin,
+OPTIONS=help, nosilent, checkpoint, cmdassist
+
+OPTIONS=disclose:all, menustyle:full, menu_headings:inverse, msg_window:single,
+OPTIONS=noextmenu, sound, sparkle
+
+OPTIONS=hilite_pet, time, showexp, noshowrace, showscore, tombstone, boulder:8 
+
+OPTIONS=noautodig, noautopickup, noautoquiver, confirm, fixinv, safe_pet,
+OPTIONS=sortpack, prayconfirm, rest_on_space, travel, pickup_burden:stressed
+OPTIONS=nolit_corridor, nolootabc, nopushweapon, runmode:run
+
