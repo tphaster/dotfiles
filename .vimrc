@@ -1,227 +1,246 @@
-" ====================================================
-" Description: Configuration file for Vi Improved    =
-" Author:      Tomasz Pieczerak <tphaster gmail.com> =
-" Last Change: Fri, 24 Jun 2011 14:47:14 CEST        =
-" ====================================================
+" =======================================================
+" Description: Configuration file for Vi Improved       =
+" Author:      Tomasz Pieczerak <tphaster AT gmail.com> =
+" =======================================================
 
-scriptencoding iso-8859-2   " kodowanie pliku konfiguracyjnego
+scriptencoding utf-8
 
-set nocompatible        " uzyj ustawien Vim'a (w przeciwnym wypadku beda to znacznie ubozsze ustawienia vi)
-set mouse=a             " umozliwia uzywanie myszy
-set ttymouse=xterm2     " obsluga myszy m.in dla screen'a
+"== General settings =="
 
-" ustawiania jezyku na polski i jezyku komunikatow na angielski
-language pl_PL
-language messages en_US
+set nocompatible    " make Vim behave in a more useful way (and no Vi-compatile)
 
-" kodowanie znakow
-set fencs=iso-8859-2    " zapisywanie wszystkich nowych plikow w tym kodowaniu
-set tenc=iso-8859-2     " kodowanie terminala
+" Mouse settings "
+set mouse=a          " enable the use of the mouse in all modes
+set ttymouse=xterm2  " enable mouse for XTerm terminals
 
-" slowniki
-set spelllang=pl,en    " sprawdzanie pisowni dla jezykow pl i en
-map  <silent><F6>    :setlocal spell!<CR>
-imap <silent><F6>    <ESC>:setlocal spell!<CR>i<right>
+" Language settings "
+language messages C.UTF-8   " print messages in English
 
-set backspace=indent,eol,start  " pozwoj na uzywanie <BS> na wszystkim
+set encoding=utf-8          " character encoding used inside Vim
+set fileencoding=utf-8      " default character encoding for new files
+set termencoding=utf-8      " character encoding used in terminal
+set fileencodings=ucs-bom,utf-8,latin2,default  " prefer latin2 over latin1
 
-set writebackup     " tworz kopie zapasowe podczas edycji
-set nobackup        " nie przechowuj kopii zapasowych zapisanych plikow
-set confirm         " pytaj co robic z niezapisanymi/tylko-do-odczytu plikami
-
-set ruler           " zawsze wyswietlaj pozycje kursora
-set showcmd         " wyswietlaj niekompletne komendy
-set showmode        " pokazje tryb w jakim jestesmy
-set showmatch       " pokazuj pasujace nawiasy
-set laststatus=2    " zawsze pokazuj status
-set title           " tytul okna
-
-set shortmess+=I    " wylacza powitanie
-
-" ustawienia schematu kolorow
-if has('gui')
-  colorscheme inkpot
-else
-  if &term == "linux"
-    set background=dark
-  else
-    colorscheme inkpot-tph
-  endif
+" Load and initialize pathogen (if not running as root) "
+if $USER != "root"
+    runtime bundle/vim-pathogen/autoload/pathogen.vim
+    call pathogen#infect()
 endif
 
-" fix &term variable if screen changed it
-if &term == "screen-bce" || &term == "screen"
+" Set colorscheme "
+if &term == "linux"     " probably this is a very primitive terminal
+    set background=dark
+else
+    let g:inkpot_black_background = 1
+    colorscheme inkpot-tph
+endif
+
+" Fix &term variable if 'screen' or other program changed it "
+if &term == "screen-bce" || &term == "screen" || &term == "xterm"
   let &term = "xterm-256color"
 endif
 
-" nie uzywaj trybu Ex, uzyj Q do formatowania
-map Q gq
 
-syntax on       " wlacz podswietlanie skladni
-"set hlsearch    " wlacz podswietlanie ostatniego szukanego wyrazu
+"== Saving/file settings =="
 
-set noautoindent    " wylacz auto-wciecia
+set nobackup        " remove backup file after the file has been written
+set confirm         " raise a dialog when trying to abandon changes etc.
+set hidden          " hide buffers instead of unloading
 
-filetype on         " wlacz rozpoznawanie typu pliku
-filetype plugin on  " wlacz obsluge pluginow
-filetype indent on  " wlacz automatyczne wciecia zalezne od typu pliku
+if has('persistent_undo')
+    set undofile                    " save undo history to files
+    set undodir=~/.vim/undofiles    " in ~/.vim/undofiles directory
+endif
 
-" dla wszystkich plikow tekstowych ustaw dlugosc linii na 78 znakow
-autocmd FileType text,tex setlocal textwidth=78 autoindent
+if has('autocmd')
+    " Jump to the last known position in a file just after opening it "
+    autocmd BufReadPost * call SetCursorPosition()
+    function! SetCursorPosition()
+        if &filetype !~ 'svn\|commit\c'
+            if line("'\"") > 0 && line("'\"") <= line("$")
+                exe "normal! g`\""
+            endif
+        end
+    endfunction
 
-" zaden z tych znakow nie powinien byc znakiem dzielacym wyrazy
-set iskeyword+=_,$,@,%,#
+    " Enter Insert mode when editing a new file "
+    autocmd BufNewFile * startinsert
 
-" podczas edycji plikow przeskakuj do ostatniej zapamietanej pozycji
-" nie rob tego jesli pozycja jest nieprawidlowa lub jesli jest w 'event handler'
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+    " Do no allow any modifications on read-only files "
+    autocmd BufReadPost * call CheckReadonly()
+    function! CheckReadonly()
+      if version >= 600
+         if &readonly
+           setlocal nomodifiable
+         endif
+      endif
+    endfunction
+endif
 
-" ustawienia numerowanie wierszy
-set nonumber        " standardowo wylacz numerowanie
 
-" wlaczanie/wylaczanie numerowania za pomoca <F2>
-map <F2> :set nu!<CR>
-imap <F2> <C-O>:set nu!<CR>
+"== Display settings =="
 
-" uzupelnianie skladni
-imap <C-Z> <C-X><C-K>
+set ruler           " always show cursor position
+set showcmd         " how (partial) commands in the last line of the screen
+set laststatus=2    " always show status line
+set title           " set window title
+set shortmess+=I    " don't give the intro message on start
+set scrolloff=5     " minimal number of lines above/below cursor
+set novisualbell    " no visual bell, please
+set nowrap          " do no wrap long lines
 
-set history=100        " pamietaj ostatnie 50 komend i 50 ostatnich wzrocow szukania
+if has('syntax')
+    set colorcolumn=+2  " highlight the 2nd column after 'textwidth'
+endif
 
-set matchtime=2        " ile dziesiatych sekundy nawiasy maja byc podswietlone
-set incsearch          " szukaj juz podczas wpisywania
+" Set appropriate characters for :list command (utf-8 or ascii) "
+if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
+    set listchars=tab:►-,trail:⋅,extends:▷,precedes:◁,nbsp:~
+else
+    set listchars=tab:>-,trail:~,extends:>,precedes:<,nbsp:~
+endif
 
-set scrolloff=5        " minimalna ilosc linii przed i po kursorze (przewijanie)
-set novisualbell       " nie mrugaj
-set nowrap             " nie zawijaj dlugich linii
-set formatoptions+=1   " przenosi pojedyncze literki do nowego wiersza
 
-" ustawienia zachowania tabulacji
-set expandtab        " nie uzywaj tabulacji!
-set tabstop=8        " szerokosc tabulatora <Tab>
-set softtabstop=4    " ile spacji wstawiac zamiast tabulacji
-set shiftwidth=4     " ilosc spacji, ktore maja byc wpisane zamiast <Tab>
+"== Editing setting  =="
 
-" ustawienia zwijania linii
-set foldmethod=indent
-"set foldmethod=marker
-"set foldmarker={,}
-set fillchars-=fold:-
-set fillchars+=fold:=
-set foldnestmax=1
-set foldtext=MyFoldText()
-set nofoldenable
+if has('autocmd')
+    filetype on
+    filetype plugin on
+    filetype indent on
+endif
+if has('syntax') && !exists('g:syntax_on')
+    syntax on               " enable syntax highlighting
+    set spelllang=pl,en     " Polish/English spell checking
+endif
 
-" zwijanie linii na podstawie wciec
-function MyFoldText()
+set backspace=indent,eol,start  " allow <BS>, <Del> on everything
+
+set autoindent      " copy indent from current line when starting a new line
+set autoread        " read open files again when changed outside Vim
+set history=100     " : commands and search patterns history size
+
+set hlsearch        " highlight all search patterns
+set incsearch       " find and show matching string while typing
+set ignorecase      " ignore case in search patterns
+set smartcase       " don't ignore case if patter contains upper case chars
+
+set showmatch       " when bracket is inserted, show the matching one
+set matchtime=2     " show matching bracket for 0.2 seconds
+
+set formatoptions+=1    " move one-letter word to the next line
+set formatoptions+=j    " remove a comment leader when joining lines
+
+set wildmenu                            " choose from menu
+set wildmode=longest:full,list:full     " behave like Bash completion 
+set wildignore=*.o,*.pyc,*~,*.swp,*.bak " ignore on <Tab> completion
+
+" Tabs and indentation "
+set expandtab       " insert spaces instead of <Tab>, use spaces in indents
+set tabstop=4       " size of <Tab> character (in spaces)
+set softtabstop=4   " number of spaces <Tab> counts for while doing <Tab>, <BS>
+set shiftwidth=4    " number of spaces to use for each step of (auto)indent
+set shiftround      " round indent to multiple of 'shiftwidth'
+
+" Folding settings "
+set nofoldenable                " folds not enabled by default
+set foldmethod=indent           " indent based folding
+"set foldmethod=marker          " marker based folding
+"set foldmarker={,}             " treat { and } as markers
+set fillchars="vert:|,fold:="   " characters to fill status lines
+set foldnestmax=5               " maximum nesting of folds (for indent method)
+set foldminlines=3              " minimum number of lines for a fold
+set foldtext=MyFoldText()       " text displayed when fold is closed
+
+function! MyFoldText()   " for indent based folding
     return '    +=== ' . (v:foldend-v:foldstart+1) . ' lines folded '
 endfunction
 
-" zwijanie linii na podstawie znacznikow
-"function MyFoldText()
+"function! MyFoldText()  " for marker based folding
 "    let line = foldtext()
 "    return substitute(line, '{\ \/\/\ \d\=', '', 'g')
 "endfunction
 
-" podswietlanie sql i html w stringach dla php
-let php_sql_query=1
-let php_htmlInStrings=1
-
-" korzysta ze styli css dla plikow html
-let html_use_css=1
-
-" podswietlaj zaawansowane zmienne Perla w stringach
-let perl_extended_vars=1
-
-" ustawia uzupelnianie w linii polecen. Dzieki temu <Tab> zawsze wyswietli
-" liste mozliwosci a nie jedna wartosc naraz
-set wildmode=longest,list
-set wildmenu
-
-" Zaczynaj nowy plik w trybie Insert
-autocmd BufNewFile * startinsert
-
-" Nie pozwalaj na zadne modyfikacje plikow tylko do odczytu.
-au BufReadPost * :call CheckReadonly()
-function! CheckReadonly()
-  if version >= 600
-     if &readonly
-       setlocal nomodifiable
-     endif
-  endif
-endfunction
-
-" ustawienia dla c.vim
-map  <silent> <F7>   <Esc>:cp<CR>
-imap <silent> <F7>   <Esc>:cp<CR>
-map  <silent> <F8>   <Esc>:cn<CR>
-imap <silent> <F8>   <Esc>:cn<CR>
-map  <silent> <F10>   <Esc>:make<CR>
-imap <silent> <F10>   <Esc>:make<CR>
-
-" ustawienia dla MiniBufExplorera
-let g:miniBufExplUseSingleClick = 1     " zmiana buforu jednym kliknieciem
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMapWindowNavVim = 1    " zmiana okien za pomoca Ctrl + [hjkl]
-let g:miniBufExplMaxSize = 2            " maksymalnie 2 linie
-
-map  <silent> <F3>   <Esc>:TMiniBufExplorer<CR><Esc>
-imap <silent> <F3>   <Esc>:TMiniBufExplorer<CR>
-
-" szybka zmiana buforow
-map  <silent> \.   <Esc>:bn!<CR>
-imap <silent> \.   <Esc>:bn!<CR>
-map  <silent> \,   <Esc>:bp!<CR>
-imap <silent> \,   <Esc>:bp!<CR>
-
-map  <silent> \1   <Esc>:b!1<CR>
-imap <silent> \1   <Esc>:b!1<CR>
-map  <silent> \2   <Esc>:b!2<CR>
-imap <silent> \2   <Esc>:b!2<CR>
-map  <silent> \3   <Esc>:b!3<CR>
-imap <silent> \3   <Esc>:b!3<CR>
-map  <silent> \4   <Esc>:b!4<CR>
-imap <silent> \4   <Esc>:b!4<CR>
-map  <silent> \5   <Esc>:b!5<CR>
-imap <silent> \5   <Esc>:b!5<CR>
-map  <silent> \6   <Esc>:b!6<CR>
-imap <silent> \6   <Esc>:b!6<CR>
-map  <silent> \7   <Esc>:b!7<CR>
-imap <silent> \7   <Esc>:b!7<CR>
-map  <silent> \8   <Esc>:b!8<CR>
-imap <silent> \8   <Esc>:b!8<CR>
-map  <silent> \9   <Esc>:b!9<CR>
-imap <silent> \9   <Esc>:b!9<CR>
-
-" ustawienia dla NERDTree
-let g:NERDTreeCaseSensitiveSort = 1
-let g:NERDTreeMouseMode = 2
-
-map  <silent> <F4> <Esc>:NERDTreeToggle<CR><Esc>
-imap <silent> <F4> <Esc>:NERDTreeToggle<CR><Esc>
-
-" ustawienia dla TagList
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_Use_SingleClick = 1
-
-map  <silent> <F5> <Esc>:TlistToggle<CR><Esc>
-imap <silent> <F5> <Esc>:TlistToggle<CR><Esc>
-
-" ustawienia dla OmniCppComplete
-map <F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
-
-let OmniCpp_DisplayMode = 1
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_DisplayMode = 1
-let OmniCpp_LocalSearchDecl = 1
-let OmniCpp_SelectFirstItem = 2
-let OmniCpp_DefaultNamespaces   = ["std", "_GLIBCXX_STD"]
-
+" Auto-completion settings "
 set completeopt=menuone,menu,longest,preview
 
-" automatycznie otwieraj i zamykaj wyskakujace menu oraz okno podgladu
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
- 
+autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+" FileTypes settings "
+
+autocmd FileType text,tex setlocal textwidth=78 spell
+autocmd FileType help setlocal nospell
+autocmd FileType svn,*commit* setlocal spell
+autocmd FileType xml,html,css setlocal noexpandtab
+
+
+"== Shortcuts/commands settings =="
+
+" \ev, \sv - quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" w!! - gain root privileges and write file
+cmap w!! w !sudo tee % >/dev/null
+
+" Q - don't use Ex mode, use Q for formatting
+map Q gq
+
+" F2 - toggle show whitespace characters
+map  <silent> <F2> <Esc>:set list!<CR>
+imap <silent> <F2> <C-O>:set list!<CR>
+
+" F3 - toggle MiniBufExplorer
+map  <silent> <F3>   <Esc>:MBEToggle<CR>
+imap <silent> <F3>   <Esc>:MBEToggle<CR>
+
+" F4 - toggle NERD_Tree
+map  <silent> <F4> <Esc>:NERDTreeToggle<CR>
+imap <silent> <F4> <Esc>:NERDTreeToggle<CR>
+
+" F5 - toggle paste-mode
+set pastetoggle=<F5>
+
+" F6 - toggle spell checking
+map  <silent> <F6>    <Esc>:setlocal spell<CR>
+imap <silent> <F6>    <C-O>:setlocal spell<CR>
+
+" Fast buffer switching
+map  <silent> <Leader>.   <Esc>:bn<CR>
+imap <silent> <Leader>.   <Esc>:bn<CR>
+map  <silent> <Leader>,   <Esc>:bp<CR>
+imap <silent> <Leader>,   <Esc>:bp<CR>
+
+map  <silent> <Leader>1   <Esc>:b1<CR>
+imap <silent> <Leader>1   <Esc>:b1<CR>
+map  <silent> <Leader>2   <Esc>:b2<CR>
+imap <silent> <Leader>2   <Esc>:b2<CR>
+map  <silent> <Leader>3   <Esc>:b3<CR>
+imap <silent> <Leader>3   <Esc>:b3<CR>
+map  <silent> <Leader>4   <Esc>:b4<CR>
+imap <silent> <Leader>4   <Esc>:b4<CR>
+map  <silent> <Leader>5   <Esc>:b5<CR>
+imap <silent> <Leader>5   <Esc>:b5<CR>
+map  <silent> <Leader>6   <Esc>:b6<CR>
+imap <silent> <Leader>6   <Esc>:b6<CR>
+map  <silent> <Leader>7   <Esc>:b7<CR>
+imap <silent> <Leader>7   <Esc>:b7<CR>
+map  <silent> <Leader>8   <Esc>:b8<CR>
+imap <silent> <Leader>8   <Esc>:b8<CR>
+map  <silent> <Leader>9   <Esc>:b9<CR>
+imap <silent> <Leader>9   <Esc>:b9<CR>
+
+
+"== Plugin settings =="
+
+" MiniBufExplorer "
+let g:did_minibufexplorer_syntax_inits = 1  " colors are set by colorscheme
+let g:miniBufExplUseSingleClick = 1         " change buffer with single-click
+let g:miniBufExplMaxSize = 2                " maximum width (lines)
+let g:miniBufExplHideWhenDiff = 1           " hide in 'diff' mode (vimdiff, -d)
+let g:miniBufExplCycleArround = 1           " enable cycling through buffers
+
+" NERD_Tree "
+let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
+let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
+let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
+

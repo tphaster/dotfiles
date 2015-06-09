@@ -1,14 +1,13 @@
 ##
 # .nethackrc -- Nethack configuration file.
 #
-#  Author:      Tomasz Pieczerak <tphaster gmail.com>
-#  Last Change: Fri, 24 Jun 2011 14:52:16 CEST
+#  Author: Tomasz Pieczerak <tphaster AT gmail.com>
 ##
 
 OPTIONS=name:TPhaster
 OPTIONS=dogname:Katsu, catname:Shinu, horsename:Seishin, fruit:pineapple
 
-OPTIONS=windowtype:tty, color, msghistory:30, number_pad, timed_delay, mail
+OPTIONS=windowtype:tty, color, msghistory:30, number_pad:0, timed_delay, mail
 OPTIONS=nostandout, nonull, use_inverse, DECgraphics, noIBMgraphics, noignintr
 
 OPTIONS=verbose, news, legacy, splash_screen, scores:3 t/3 a/o, notoptenwin,

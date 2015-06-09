@@ -1,22 +1,21 @@
 ##
-# .screenrc --	GNU screen configuration file
+# .screenrc -- GNU screen configuration file
 #
-#  Author:	Tomasz Pieczerak <tphaster gmail.com>
-#  Last Change: Tue, 29 Mar 2011 19:08:17 CEST
+#  Author: Tomasz Pieczerak <tphaster AT gmail.com>
 ##
 
-vbell off		# turn off visual bell
-autodetach on		# detach on hangups
-startup_message	off	# don't display the copyright page
-defscrollback 1024	# default scrollback value
-altscreen on		# turn on "alternate screen" capability
-msgwait 4		# 2 seconds messages
-compacthist on		# suppress trailing blank lines when scrolling
-defwrap off		# do not wrap lines
-nethack on		# messages in nethack style
+vbell off           # turn off visual bell
+autodetach on       # detach on hangups
+startup_message off # don't display the copyright page
+defscrollback 16384 # default scrollback value
+altscreen on        # turn on "alternate screen" capability
+msgwait 4           # 2 seconds messages
+compacthist on      # suppress trailing blank lines when scrolling
+defwrap off         # do not wrap lines
+nethack on          # messages in nethack style
 
-attrcolor b ".I"	# use bright colors for bold text
-defbce on		# erase with current backgroud color by default
+attrcolor b ".I"    # use bright colors for bold text
+defbce on           # erase with current backgroud color by default
 
 # Enable non-blocking mode to better cope with flaky ssh connections.
 nonblock 5
@@ -112,11 +111,12 @@ bindkey "^[w" next
 # status line settings
 hardstatus alwayslastline
 hardstatus string '%{gk}[ %{g}%H %{g}] %= %{wk}%?%-Lw%?%{=b kR}[ %{W}%n*%f %t%?(%u)%?%{=b kR} ]%{= kw}%?%+Lw%?%?%= %{g} [%{m} %c %{g}]%{W}'
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
 sorendition 10 kg
 
 # autostart
-screen -t mc	0 mc
-screen -t vim	1 vim
-screen -t bash	2 /bin/bash
+screen -t mc    0 mc
+screen -t vim   1 vim
+screen -t bash  2 /bin/bash
 select 0
 
