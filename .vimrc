@@ -27,17 +27,17 @@ if $USER != "root"
     call pathogen#infect()
 endif
 
+" Fix &term variable if 'screen' or other program changed it "
+if &term == "screen-bce" || &term == "screen" || &term == "xterm"
+  let &term = "xterm-256color"
+endif
+
 " Set colorscheme "
 if &term == "linux"     " probably this is a very primitive terminal
     set background=dark
 else
     let g:inkpot_black_background = 1
     colorscheme inkpot-tph
-endif
-
-" Fix &term variable if 'screen' or other program changed it "
-if &term == "screen-bce" || &term == "screen" || &term == "xterm"
-  let &term = "xterm-256color"
 endif
 
 
@@ -170,7 +170,7 @@ autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 autocmd FileType text,tex setlocal textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
-autocmd FileType xml,html,css setlocal noexpandtab
+autocmd FileType xml,html,xhtml,css setlocal noexpandtab
 
 
 "== Shortcuts/commands settings =="
@@ -201,8 +201,8 @@ imap <silent> <F4> <Esc>:NERDTreeToggle<CR>
 set pastetoggle=<F5>
 
 " F6 - toggle spell checking
-map  <silent> <F6>    <Esc>:setlocal spell<CR>
-imap <silent> <F6>    <C-O>:setlocal spell<CR>
+map  <silent> <F6>    <Esc>:setlocal spell!<CR>
+imap <silent> <F6>    <C-O>:setlocal spell!<CR>
 
 " Fast buffer switching
 map  <silent> <Leader>.   <Esc>:bn<CR>
