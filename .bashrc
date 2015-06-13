@@ -1,7 +1,7 @@
 ##
 # .bashrc -- bash startup file
 #
-#  Author: Tomasz Pieczerak <tphaster gmail.com>
+#  Author: Tomasz Pieczerak <tphaster AT gmail.com>
 ##
 
 # If not running interactively, don't do anything
@@ -10,20 +10,26 @@ case $- in
       *) return;;
 esac
 
-# Environment variables
-export PATH=$PATH:/sbin:/usr/sbin:~/.bin:.
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.bin" ] ; then
+    PATH="$HOME/.bin:$PATH"
+fi
+
+# add system binaries to PATH (useful when calling through sudo)
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+
+# set environment variables
+export LC_MESSAGES=C.UTF-8      # print messages in English
 export EDITOR=vim
 export VISUAL=vim
-export LC_MESSAGES=C.UTF-8
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+# don't put duplicate lines or lines starting with space in the history
 HISTCONTROL=ignoreboth:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# set history length, number of commands/lines in the history file
 HISTSIZE=2048
 HISTFILESIZE=4096
 
@@ -101,9 +107,8 @@ if ! shopt -oq posix; then
 fi
 
 # Print fortune for interactive shells
-if [[ $- = *i* ]]; then
+if [ -x /usr/games/fortune ]; then
     echo
     /usr/games/fortune -a
     echo
 fi
-
