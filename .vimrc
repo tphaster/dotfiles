@@ -36,7 +36,9 @@ endif
 if &term == "linux"     " probably this is a very primitive terminal
     set background=dark
 else
-    let g:inkpot_black_background = 1
+    if ! has("gui_running")
+        let g:inkpot_black_background = 1
+    endif
     colorscheme inkpot-tph
 endif
 
@@ -144,21 +146,30 @@ set shiftround      " round indent to multiple of 'shiftwidth'
 " Folding settings "
 set nofoldenable                " folds not enabled by default
 set foldmethod=indent           " indent based folding
-"set foldmethod=marker          " marker based folding
-"set foldmarker={,}             " treat { and } as markers
+set foldmarker={,}              " treat { and } as markers
 set fillchars="vert:|,fold:="   " characters to fill status lines
 set foldnestmax=5               " maximum nesting of folds (for indent method)
 set foldminlines=3              " minimum number of lines for a fold
-set foldtext=MyFoldText()       " text displayed when fold is closed
+set foldtext=MyFoldIndent()     " text displayed when fold is closed
 
-function! MyFoldText()   " for indent based folding
+function! FoldTextIndent()  " for indent based folding
     return '    +=== ' . (v:foldend-v:foldstart+1) . ' lines folded '
 endfunction
 
-"function! MyFoldText()  " for marker based folding
-"    let line = foldtext()
-"    return substitute(line, '{\ \/\/\ \d\=', '', 'g')
-"endfunction
+function! FoldTextMarker()  " for marker based folding
+    let line = foldtext()
+    return substitute(line, '{\ \/\/\ \d\=', '', 'g')
+endfunction
+
+function! FoldToggle()  " fold toggle with setting foldcolumn
+    if &foldenable
+        set foldcolumn=0
+        set nofoldenable
+    else
+        set foldcolumn=1
+        set foldenable
+    endif
+endfunction
 
 " Auto-completion settings "
 set completeopt=menuone,menu,longest,preview
@@ -185,6 +196,10 @@ cmap w!! w !sudo tee % >/dev/null
 " Q - don't use Ex mode, use Q for formatting
 map Q gq
 
+" \f - toggle folds
+map  <silent> <leader>f <Esc>:call FoldToggle()<CR>
+imap <silent> <leader>f <C-O>:call FoldToggle()<CR>
+
 " F2 - toggle show whitespace characters
 map  <silent> <F2> <Esc>:set list!<CR>
 imap <silent> <F2> <C-O>:set list!<CR>
@@ -205,29 +220,29 @@ map  <silent> <F6>    <Esc>:setlocal spell!<CR>
 imap <silent> <F6>    <C-O>:setlocal spell!<CR>
 
 " Fast buffer switching
-map  <silent> <Leader>.   <Esc>:bn<CR>
-imap <silent> <Leader>.   <Esc>:bn<CR>
-map  <silent> <Leader>,   <Esc>:bp<CR>
-imap <silent> <Leader>,   <Esc>:bp<CR>
+map  <silent> <leader>.   <Esc>:bn<CR>
+imap <silent> <leader>.   <Esc>:bn<CR>
+map  <silent> <leader>,   <Esc>:bp<CR>
+imap <silent> <leader>,   <Esc>:bp<CR>
 
-map  <silent> <Leader>1   <Esc>:b1<CR>
-imap <silent> <Leader>1   <Esc>:b1<CR>
-map  <silent> <Leader>2   <Esc>:b2<CR>
-imap <silent> <Leader>2   <Esc>:b2<CR>
-map  <silent> <Leader>3   <Esc>:b3<CR>
-imap <silent> <Leader>3   <Esc>:b3<CR>
-map  <silent> <Leader>4   <Esc>:b4<CR>
-imap <silent> <Leader>4   <Esc>:b4<CR>
-map  <silent> <Leader>5   <Esc>:b5<CR>
-imap <silent> <Leader>5   <Esc>:b5<CR>
-map  <silent> <Leader>6   <Esc>:b6<CR>
-imap <silent> <Leader>6   <Esc>:b6<CR>
-map  <silent> <Leader>7   <Esc>:b7<CR>
-imap <silent> <Leader>7   <Esc>:b7<CR>
-map  <silent> <Leader>8   <Esc>:b8<CR>
-imap <silent> <Leader>8   <Esc>:b8<CR>
-map  <silent> <Leader>9   <Esc>:b9<CR>
-imap <silent> <Leader>9   <Esc>:b9<CR>
+map  <silent> <leader>1   <Esc>:b1<CR>
+imap <silent> <leader>1   <Esc>:b1<CR>
+map  <silent> <leader>2   <Esc>:b2<CR>
+imap <silent> <leader>2   <Esc>:b2<CR>
+map  <silent> <leader>3   <Esc>:b3<CR>
+imap <silent> <leader>3   <Esc>:b3<CR>
+map  <silent> <leader>4   <Esc>:b4<CR>
+imap <silent> <leader>4   <Esc>:b4<CR>
+map  <silent> <leader>5   <Esc>:b5<CR>
+imap <silent> <leader>5   <Esc>:b5<CR>
+map  <silent> <leader>6   <Esc>:b6<CR>
+imap <silent> <leader>6   <Esc>:b6<CR>
+map  <silent> <leader>7   <Esc>:b7<CR>
+imap <silent> <leader>7   <Esc>:b7<CR>
+map  <silent> <leader>8   <Esc>:b8<CR>
+imap <silent> <leader>8   <Esc>:b8<CR>
+map  <silent> <leader>9   <Esc>:b9<CR>
+imap <silent> <leader>9   <Esc>:b9<CR>
 
 
 "== Plugin settings =="
