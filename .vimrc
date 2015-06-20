@@ -110,7 +110,7 @@ if has('autocmd')
     filetype plugin on
     filetype indent on
 endif
-if has('syntax') && !exists('g:syntax_on')
+if has('syntax')
     syntax on               " enable syntax highlighting
     set spelllang=pl,en     " Polish/English spell checking
 endif
@@ -181,7 +181,7 @@ autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 autocmd FileType text,tex setlocal textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
-autocmd FileType xml,html,xhtml,css setlocal noexpandtab
+autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 spell
 
 
 "== Shortcuts/commands settings =="
@@ -260,4 +260,6 @@ let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
 let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
 
 "== Local settings =="
-source ~/.vimrc_local
+if filereadable("~/.vimrc_local")
+    source ~/.vimrc_local
+endif
