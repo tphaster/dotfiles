@@ -14,7 +14,13 @@ set mouse=a          " enable the use of the mouse in all modes
 set ttymouse=xterm2  " enable mouse for XTerm terminals
 
 " Language settings "
-language messages C.UTF-8   " print messages in English
+
+" print messages in a portable locale (with UTF-8 encoding if available)
+if empty(system("locale -a | grep -i C.UTF-8"))
+    language messages C
+else
+    language messages C.UTF-8
+endif
 
 set encoding=utf-8          " character encoding used inside Vim
 set fileencoding=utf-8      " default character encoding for new files
@@ -178,10 +184,10 @@ autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
 " FileTypes settings "
 
-autocmd FileType text,tex setlocal textwidth=78 spell
+autocmd FileType text,tex setlocal noexpandtab textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
-autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 spell
+autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 
 
 "== Shortcuts/commands settings =="

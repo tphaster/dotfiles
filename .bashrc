@@ -18,8 +18,14 @@ fi
 # add system binaries to PATH (useful when calling through sudo)
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 
-# set environment variables
-export LC_MESSAGES=C.UTF-8      # print messages in English
+# print messages in a portable locale (with UTF-8 encoding if available)
+if [ -n "`locale -a | grep -i 'C.UTF-8'`" ]; then
+    export LC_MESSAGES="C.UTF-8"
+else
+    export LC_MESSAGES="C"
+fi
+
+# set some environment variables
 export EDITOR=vim
 export VISUAL=vim
 
