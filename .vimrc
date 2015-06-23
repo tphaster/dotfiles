@@ -266,6 +266,6 @@ let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
 let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
 
 "== Local settings =="
-if filereadable("~/.vimrc_local")
+if filereadable(glob("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
