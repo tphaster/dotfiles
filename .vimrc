@@ -139,7 +139,7 @@ set formatoptions+=1    " move one-letter word to the next line
 set formatoptions+=j    " remove a comment leader when joining lines
 
 set wildmenu                            " choose from menu
-set wildmode=longest:full,list:full     " behave like Bash completion 
+set wildmode=longest:full,list:full     " behave like Bash completion
 set wildignore=*.o,*.pyc,*~,*.swp,*.bak " ignore on <Tab> completion
 
 " Tabs and indentation "
@@ -264,6 +264,10 @@ let g:miniBufExplCycleArround = 1           " enable cycling through buffers
 let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
 let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
 let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
+
+" vim-arline "
+let g:airline_theme            = 'dark'
+let g:airline_powerline_fonts  = 1
 
 "== Local settings =="
 if filereadable(glob("~/.vimrc_local"))
