@@ -64,11 +64,9 @@ if has('autocmd')
     " Jump to the last known position in a file just after opening it "
     autocmd BufReadPost * call SetCursorPosition()
     function! SetCursorPosition()
-        if &filetype !~ 'svn\|commit\c'
-            if line("'\"") > 0 && line("'\"") <= line("$")
-                exe "normal! g`\""
-            endif
-        end
+        if line("'\"") > 0 && line("'\"") <= line("$")
+            exe "normal! g'\""
+        endif
     endfunction
 
     " Enter Insert mode when editing a new file "
@@ -187,6 +185,7 @@ autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 autocmd FileType text,tex setlocal noexpandtab textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
+autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 
 
