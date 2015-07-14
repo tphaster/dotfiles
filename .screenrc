@@ -10,7 +10,7 @@ startup_message off # don't display the copyright page
 defscrollback 16384 # default scrollback value
 msgwait 4           # 2 seconds messages
 compacthist on      # suppress trailing blank lines when scrolling
-defwrap off         # do not wrap lines
+defwrap on          # wrap lines
 nethack on          # messages in nethack style
 
 attrcolor b ".I"    # use bright colors for bold text
