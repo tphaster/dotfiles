@@ -188,6 +188,8 @@ autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 
+" Tags setting "
+set tags=./tags;~/
 
 "== Shortcuts/commands settings =="
 
@@ -263,6 +265,7 @@ let g:miniBufExplCycleArround = 1           " enable cycling through buffers
 let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
 let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
 let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
+let g:NERDTreeIgnore = ['\~$', '\.o$', '\.lo$'] " ignore some non-editable files
 
 " vim-arline "
 let g:airline_theme            = 'dark'
