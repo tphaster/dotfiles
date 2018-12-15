@@ -1,8 +1,8 @@
-##
-# .bashrc -- bash startup file
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
 #
 #  Author: Tomasz Pieczerak <tphaster AT gmail.com>
-##
+
 
 # If not running interactively, don't do anything
 case $- in
@@ -11,8 +11,13 @@ case $- in
 esac
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
 # add system binaries to PATH (useful when calling through sudo)
@@ -25,7 +30,7 @@ else
     export LC_MESSAGES="C"
 fi
 
-# set some environment variables
+# set editor environment variables
 export EDITOR=vim
 export VISUAL=vim
 
@@ -35,7 +40,7 @@ HISTCONTROL=ignoreboth:erasedups
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# set history length, number of commands/lines in the history file
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=2048
 HISTFILESIZE=4096
 
@@ -48,7 +53,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -57,7 +62,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned

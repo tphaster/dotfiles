@@ -182,7 +182,7 @@ autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
 " FileTypes settings "
 
-autocmd FileType text,tex setlocal noexpandtab textwidth=78 spell
+autocmd FileType text,tex setlocal textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
@@ -265,7 +265,8 @@ let g:miniBufExplCycleArround = 1           " enable cycling through buffers
 let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
 let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
 let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
-let g:NERDTreeIgnore = ['\~$', '\.o$', '\.lo$'] " ignore some non-editable files
+" ignore some non-editable files
+let g:NERDTreeIgnore = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
 
 " vim-arline "
 let g:airline_theme            = 'dark'
