@@ -1,0 +1,95 @@
+#!/bin/sh
+
+# cpu-governor, a script to change CPU governor
+# Author: Tomasz Pieczerak (tph) <tphaster AT gmail.com>
+
+VERSION="0.1"
+
+set -e
+
+CPU_CORES=`nproc --all`
+
+# display usage info function
+usage(){
+    cat 1>&2 <<EOT
+Usage: `basename $0` [OPTION]
+
+Try '`basename $0` --help' for more options.
+EOT
+}
+
+# check number of arguments
+if [ $# -gt 1 ]; then
+    echo "`basename $0`: only one OPTION allowed" 1>&2
+    usage
+    exit 1
+fi
+
+# display help on '-h' or '--help' option
+if [ "x$1" = "x--help" -o "x$1" = "x-h" ]; then
+    cat <<EOT
+cpu-governor $VERSION, a script to change CPU governor
+
+Usage: `basename $0` [OPTION]
+
+Startup:
+    -V, --version   display the version of script and exit.
+    -h, --help      print this help.
+
+Options:
+    --print             print CPU governor for all cores. [default]
+    -p, --performance   set CPU governor to 'performance'.
+    -o, --ondemand      set CPU governor to 'ondemand'.
+    -s, --powersave     set CPU governor to 'powersave'.
+
+Mail bug reports and suggestions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+# print program version on '-V' or '--version' option
+if [ "x$1" = "x--version" -o "x$1" = "x-V" ]; then
+    cat <<EOT
+cpu-governor $VERSION
+
+Copyright (C) 2019 Tomasz Pieczerak
+License GPLv3+: GNU GPL version 3 or later
+<http://www.gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written and maintained by Tomasz Pieczerak (tph) <tphaster AT gmail.com>.
+Please send bug reports and questions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+# by default, print governor for all cores
+if [ $# -eq 0 -o "x$1" = "x--print" ]; then
+    for i in $(seq 0 $(($CPU_CORES - 1)))
+    do
+        echo "CPU governor on core $i is set to '`cat /sys/devices/system/cpu/cpu$i/cpufreq/scaling_governor`'"
+    done
+    exit 0
+fi
+
+# choose CPU governor based on OPTION
+if [ "x$1" = "x--performance" -o "x$1" = "x-p" ]; then
+    CPU_GOVERNOR="performance"
+elif [ "x$1" = "x--ondemand" -o "x$1" = "x-d" ]; then
+    CPU_GOVERNOR="ondemand"
+elif [ "x$1" = "x--powersave" -o "x$1" = "x-s" ]; then
+    CPU_GOVERNOR="powersave"
+else
+    echo "`basename $0`: unrecognized option '$1'" 1>&2
+    usage
+    exit 1
+fi
+
+# set CPU governor on all cores
+for i in $(seq 0 $(($CPU_CORES - 1)))
+do
+    echo $CPU_GOVERNOR > /sys/devices/system/cpu/cpu$i/cpufreq/scaling_governor
+done
+
+echo "CPU governor set to '$CPU_GOVERNOR' on $CPU_CORES cores"
