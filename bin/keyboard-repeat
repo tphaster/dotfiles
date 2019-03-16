@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# keyboard-repeat, a script to change keyboard repeat settings in GNOME
+# Author: Tomasz Pieczerak (tph) <tphaster AT gmail.com>
+
+VERSION="0.1"
+
+set -e
+
+SCHEMA="org.gnome.desktop.peripherals.keyboard"
+REPEAT_KEY="repeat"
+DELAY_KEY="delay"
+INTERVAL_KEY="repeat-interval"
+
+# display usage info function
+usage(){
+    cat 1>&2 <<EOT
+Usage: `basename $0` [OPTION]
+
+Try '`basename $0` --help' for more options.
+EOT
+}
+
+# check number of arguments
+if [ $# -gt 1 ]; then
+    echo "`basename $0`: only one OPTION allowed" 1>&2
+    usage
+    exit 1
+fi
+
+# display help on '-h' or '--help' option
+if [ "x$1" = "x--help" -o "x$1" = "x-h" ]; then
+    cat <<EOT
+keyboard-repeat $VERSION, a script to change keyboard repeat settings in GNOME
+
+Usage: `basename $0` [OPTION]
+
+Startup:
+    -V, --version   display the version of script and exit.
+    -h, --help      print this help.
+
+Options:
+    --print         print current keyboard repeat settings. [default]
+    --reset         reset settings to GNOME default.
+    --sc2           set profile for StarCraft 2.
+
+Mail bug reports and suggestions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+# print program version on '-V' or '--version' option
+if [ "x$1" = "x--version" -o "x$1" = "x-V" ]; then
+    cat <<EOT
+keyboard-repeat $VERSION
+
+Copyright (C) 2019 Tomasz Pieczerak
+License GPLv3+: GNU GPL version 3 or later
+<http://www.gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written and maintained by Tomasz Pieczerak (tph) <tphaster AT gmail.com>.
+Please send bug reports and questions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+# by default, print governor for all cores
+if [ $# -eq 0 -o "x$1" = "x--print" ]; then
+    echo "Current keyboard repeat settings"
+    echo " * repeat = `gsettings get $SCHEMA $REPEAT_KEY`"
+    echo " * delay = `gsettings get $SCHEMA $DELAY_KEY | awk '{print $2}'` ms"
+    echo " * repeat-interval = `gsettings get $SCHEMA $INTERVAL_KEY | awk '{print $2}'` ms"
+    exit 0
+fi
+
+# load settings bound to given OPTION
+if [ "x$1" = "x--reset" ]; then
+    gsettings reset $SCHEMA $REPEAT_KEY
+    gsettings reset $SCHEMA $DELAY_KEY
+    gsettings reset $SCHEMA $INTERVAL_KEY
+elif [ "x$1" = "x--sc2" ]; then
+    gsettings set $SCHEMA $REPEAT_KEY true
+    gsettings set $SCHEMA $DELAY_KEY 300
+    gsettings set $SCHEMA $INTERVAL_KEY 15
+else
+    echo "`basename $0`: unrecognized option '$1'" 1>&2
+    usage
+    exit 1
+fi
