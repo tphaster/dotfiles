@@ -83,7 +83,7 @@ if [ "x$1" = "x--reset" ]; then
 elif [ "x$1" = "x--sc2" ]; then
     gsettings set $SCHEMA $REPEAT_KEY true
     gsettings set $SCHEMA $DELAY_KEY 300
-    gsettings set $SCHEMA $INTERVAL_KEY 15
+    gsettings set $SCHEMA $INTERVAL_KEY 25
 else
     echo "`basename $0`: unrecognized option '$1'" 1>&2
     usage

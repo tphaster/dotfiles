@@ -19,5 +19,6 @@ fi
 # Other programs
 alias bc='bc -l -q'
 alias screen='screen -U'
+alias gitg='gitg 2>/dev/null'
 
 # vim: set ft=sh :
