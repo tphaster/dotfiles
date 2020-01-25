@@ -17,9 +17,9 @@ set ttymouse=xterm2  " enable mouse for XTerm terminals
 
 " print messages in a portable locale (with UTF-8 encoding if available)
 if empty(system("locale -a | grep -i C.UTF-8"))
-    language messages C
+	language messages C
 else
-    language messages C.UTF-8
+	language messages C.UTF-8
 endif
 
 set encoding=utf-8          " character encoding used inside Vim
@@ -27,25 +27,42 @@ set fileencoding=utf-8      " default character encoding for new files
 set termencoding=utf-8      " character encoding used in terminal
 set fileencodings=ucs-bom,utf-8,latin2,default  " prefer latin2 over latin1
 
-" Load and initialize pathogen (if not running as root) "
+" Load and initialize plugins (if not running as root) "
 if $USER != "root"
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    call pathogen#infect()
+	if empty(glob('~/.vim/autoload/plug.vim'))
+		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+			\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
 endif
+
+call plug#begin('~/.vim/bundle')
+	Plug 'bling/vim-airline'
+	Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-eunuch'
+
+	" Git
+	Plug 'tpope/vim-fugitive'
+	Plug 'airblade/vim-gitgutter'
+
+	" C++
+	Plug 'octol/vim-cpp-enhanced-highlight'
+call plug#end()
 
 " Fix &term variable if 'screen' or other program changed it "
 if &term == "screen-bce" || &term == "screen" || &term == "xterm"
-  let &term = "xterm-256color"
+	let &term = "xterm-256color"
 endif
 
 " Set colorscheme "
 if &term == "linux"     " probably this is a very primitive terminal
-    set background=dark
+	set background=dark
 else
-    if ! has("gui_running")
-        let g:inkpot_black_background = 1
-    endif
-    colorscheme inkpot-tph
+	if ! has("gui_running")
+		let g:inkpot_black_background = 1
+	endif
+	colorscheme inkpot-tph
 endif
 
 
@@ -54,39 +71,41 @@ endif
 set nobackup        " remove backup file after the file has been written
 set confirm         " raise a dialog when trying to abandon changes etc.
 set hidden          " hide buffers instead of unloading
+set updatetime=300  " how often swap files will be written to disk [ms]
 
 if has('persistent_undo')
-    set undofile                    " save undo history to files
-    set undodir=~/.vim/undofiles    " in ~/.vim/undofiles directory
+	set undofile                    " save undo history to files
+	set undodir=~/.vim/undofiles    " in ~/.vim/undofiles directory
 endif
 
 if has('autocmd')
-    " Jump to the last known position in a file just after opening it "
-    autocmd BufReadPost * call SetCursorPosition()
-    function! SetCursorPosition()
-        if line("'\"") > 0 && line("'\"") <= line("$")
-            exe "normal! g'\""
-        endif
-    endfunction
+	" Jump to the last known position in a file just after opening it "
+	autocmd BufReadPost * call SetCursorPosition()
+	function! SetCursorPosition()
+		if line("'\"") > 0 && line("'\"") <= line("$")
+			exe "normal! g'\""
+		endif
+	endfunction
 
-    " Enter Insert mode when editing a new file "
-    autocmd BufNewFile * startinsert
+	" Enter Insert mode when editing a new file "
+	autocmd BufNewFile * startinsert
 
-    " Do no allow any modifications on read-only files "
-    autocmd BufReadPost * call CheckReadonly()
-    function! CheckReadonly()
-      if version >= 600
-         if &readonly
-           setlocal nomodifiable
-         endif
-      endif
-    endfunction
+	" Do no allow any modifications on read-only files "
+	autocmd BufReadPost * call CheckReadonly()
+	function! CheckReadonly()
+		if version >= 600
+			if &readonly
+			setlocal nomodifiable
+			endif
+		endif
+	endfunction
 endif
 
 
 "== Display settings =="
 
 set ruler           " always show cursor position
+set signcolumn=yes  " always show sign column
 set showcmd         " how (partial) commands in the last line of the screen
 set laststatus=2    " always show status line
 set title           " set window title
@@ -96,27 +115,27 @@ set novisualbell    " no visual bell, please
 set nowrap          " do no wrap long lines
 
 if has('syntax')
-    set colorcolumn=+2  " highlight the 2nd column after 'textwidth'
+	set colorcolumn=+2  " highlight the 2nd column after 'textwidth'
 endif
 
 " Set appropriate characters for :list command (utf-8 or ascii) "
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
-    set listchars=tab:►-,trail:⋅,extends:▷,precedes:◁,nbsp:~
+	set listchars=tab:►-,trail:⋅,extends:▷,precedes:◁,nbsp:~
 else
-    set listchars=tab:>-,trail:~,extends:>,precedes:<,nbsp:~
+	set listchars=tab:>-,trail:~,extends:>,precedes:<,nbsp:~
 endif
 
 
 "== Editing setting  =="
 
 if has('autocmd')
-    filetype on
-    filetype plugin on
-    filetype indent on
+	filetype on
+	filetype plugin indent on
 endif
+
 if has('syntax')
-    syntax on               " enable syntax highlighting
-    set spelllang=pl,en     " Polish/English spell checking
+	syntax on
+	set spelllang=pl,en		" Polish/English spell checking
 endif
 
 set backspace=indent,eol,start  " allow <BS>, <Del> on everything
@@ -141,7 +160,8 @@ set wildmode=longest:full,list:full     " behave like Bash completion
 set wildignore=*.o,*.pyc,*~,*.swp,*.bak " ignore on <Tab> completion
 
 " Tabs and indentation "
-set expandtab       " insert spaces instead of <Tab>, use spaces in indents
+set noexpandtab     " use actual <Tab> for indentation
+set smarttab        "
 set tabstop=4       " size of <Tab> character (in spaces)
 set softtabstop=4   " number of spaces <Tab> counts for while doing <Tab>, <BS>
 set shiftwidth=4    " number of spaces to use for each step of (auto)indent
@@ -157,22 +177,22 @@ set foldminlines=3              " minimum number of lines for a fold
 set foldtext=MyFoldIndent()     " text displayed when fold is closed
 
 function! FoldTextIndent()  " for indent based folding
-    return '    +=== ' . (v:foldend-v:foldstart+1) . ' lines folded '
+	return '    +=== ' . (v:foldend-v:foldstart+1) . ' lines folded '
 endfunction
 
 function! FoldTextMarker()  " for marker based folding
-    let line = foldtext()
-    return substitute(line, '{\ \/\/\ \d\=', '', 'g')
+	let line = foldtext()
+	return substitute(line, '{\ \/\/\ \d\=', '', 'g')
 endfunction
 
 function! FoldToggle()  " fold toggle with setting foldcolumn
-    if &foldenable
-        set foldcolumn=0
-        set nofoldenable
-    else
-        set foldcolumn=1
-        set foldenable
-    endif
+	if &foldenable
+		set foldcolumn=0
+		set nofoldenable
+	else
+		set foldcolumn=1
+		set foldenable
+	endif
 endfunction
 
 " Auto-completion settings "
@@ -203,21 +223,17 @@ cmap w!! w !sudo tee % >/dev/null
 " Q - don't use Ex mode, use Q for formatting
 map Q gq
 
-" \f - toggle folds
-map  <silent> <leader>f <Esc>:call FoldToggle()<CR>
-imap <silent> <leader>f <C-O>:call FoldToggle()<CR>
-
 " F2 - toggle show whitespace characters
 map  <silent> <F2> <Esc>:set list!<CR>
 imap <silent> <F2> <C-O>:set list!<CR>
 
-" F3 - toggle MiniBufExplorer
-map  <silent> <F3>   <Esc>:MBEToggle<CR>
-imap <silent> <F3>   <Esc>:MBEToggle<CR>
+" F3 - toggle folds
+map  <silent> <F3>   <Esc>:call FoldToggle()<CR>
+imap <silent> <F3>   <C-O>:call FoldToggle()<CR>
 
 " F4 - toggle NERD_Tree
 map  <silent> <F4> <Esc>:NERDTreeToggle<CR>
-imap <silent> <F4> <Esc>:NERDTreeToggle<CR>
+imap <silent> <F4> <C-O>:NERDTreeToggle<CR>
 
 " F5 - toggle paste-mode
 set pastetoggle=<F5>
@@ -254,13 +270,6 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 
 "== Plugin settings =="
 
-" MiniBufExplorer "
-let g:did_minibufexplorer_syntax_inits = 1  " colors are set by colorscheme
-let g:miniBufExplUseSingleClick = 1         " change buffer with single-click
-let g:miniBufExplMaxSize = 2                " maximum width (lines)
-let g:miniBufExplHideWhenDiff = 1           " hide in 'diff' mode (vimdiff, -d)
-let g:miniBufExplCycleArround = 1           " enable cycling through buffers
-
 " NERD_Tree "
 let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
 let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
@@ -269,10 +278,11 @@ let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
 let g:NERDTreeIgnore = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
 
 " vim-arline "
-let g:airline_theme            = 'dark'
-let g:airline_powerline_fonts  = 1
+let g:airline_theme                      = 'dark'
+let g:airline_powerline_fonts            = 1
+let g:airline#extensions#tabline#enabled = 1
 
 "== Local settings =="
 if filereadable(glob("~/.vimrc_local"))
-    source ~/.vimrc_local
+	source ~/.vimrc_local
 endif
