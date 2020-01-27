@@ -10,10 +10,16 @@ scriptencoding utf-8
 set nocompatible    " make Vim behave in a more useful way (and no Vi-compatile)
 
 " Mouse settings "
-set mouse=a          " enable the use of the mouse in all modes
-set ttymouse=xterm2  " enable mouse for XTerm terminals
+set mouse=a         " enable the use of the mouse in all modes
+set ttymouse=xterm2 " enable mouse for XTerm terminals
 
-" Language settings "
+
+"== Language and encoding =="
+
+set encoding=utf-8          " character encoding used inside Vim
+set fileencoding=utf-8      " default character encoding for new files
+set termencoding=utf-8      " character encoding used in terminal
+set fileencodings=ucs-bom,utf-8,latin2,default  " prefer latin2 over latin1
 
 " print messages in a portable locale (with UTF-8 encoding if available)
 if empty(system("locale -a | grep -i C.UTF-8"))
@@ -22,40 +28,39 @@ else
 	language messages C.UTF-8
 endif
 
-set encoding=utf-8          " character encoding used inside Vim
-set fileencoding=utf-8      " default character encoding for new files
-set termencoding=utf-8      " character encoding used in terminal
-set fileencodings=ucs-bom,utf-8,latin2,default  " prefer latin2 over latin1
 
-" Load and initialize plugins (if not running as root) "
+" == Plugins == "
 if $USER != "root"
 	if empty(glob('~/.vim/autoload/plug.vim'))
 		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 			\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	endif
+
+	call plug#begin('~/.vim/bundle')
+		Plug 'bling/vim-airline'
+		Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+		Plug 'tpope/vim-surround'
+		Plug 'tpope/vim-eunuch'
+
+		" Git
+		Plug 'tpope/vim-fugitive'
+		Plug 'airblade/vim-gitgutter'
+
+		" C++
+		Plug 'octol/vim-cpp-enhanced-highlight'
+	call plug#end()
 endif
 
-call plug#begin('~/.vim/bundle')
-	Plug 'bling/vim-airline'
-	Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-	Plug 'tpope/vim-surround'
-	Plug 'tpope/vim-eunuch'
 
-	" Git
-	Plug 'tpope/vim-fugitive'
-	Plug 'airblade/vim-gitgutter'
+" == Other settings == "
 
-	" C++
-	Plug 'octol/vim-cpp-enhanced-highlight'
-call plug#end()
-
-" Fix &term variable if 'screen' or other program changed it "
+" fix &term variable if 'screen' or other program changed it
 if &term == "screen-bce" || &term == "screen" || &term == "xterm"
 	let &term = "xterm-256color"
 endif
 
-" Set colorscheme "
+" Set color scheme "
 if &term == "linux"     " probably this is a very primitive terminal
 	set background=dark
 else
@@ -104,15 +109,16 @@ endif
 
 "== Display settings =="
 
-set ruler           " always show cursor position
-set signcolumn=yes  " always show sign column
-set showcmd         " how (partial) commands in the last line of the screen
-set laststatus=2    " always show status line
-set title           " set window title
-set shortmess+=I    " don't give the intro message on start
-set scrolloff=5     " minimal number of lines above/below cursor
-set novisualbell    " no visual bell, please
-set nowrap          " do no wrap long lines
+set ruler               " always show cursor position
+set signcolumn=yes      " always show sign column
+set showcmd             " how (partial) commands in the last line of the screen
+set laststatus=2        " always show status line
+set title               " set window title
+set shortmess+=I        " don't give the intro message on start
+set scrolloff=5         " minimal number of lines above/below cursor
+set novisualbell        " no visual bell, please
+set nowrap              " do no wrap long lines
+set display+=lastline   " display as much as possible of the last line
 
 if has('syntax')
 	set colorcolumn=+2  " highlight the 2nd column after 'textwidth'
@@ -126,7 +132,7 @@ else
 endif
 
 
-"== Editing setting  =="
+"== Editing settings =="
 
 if has('autocmd')
 	filetype on
@@ -135,12 +141,11 @@ endif
 
 if has('syntax')
 	syntax on
-	set spelllang=pl,en		" Polish/English spell checking
+	set spelllang=pl,en     " Polish/English spell checking
 endif
 
 set backspace=indent,eol,start  " allow <BS>, <Del> on everything
 
-set autoindent      " copy indent from current line when starting a new line
 set autoread        " read open files again when changed outside Vim
 set history=100     " : commands and search patterns history size
 
@@ -160,14 +165,15 @@ set wildmode=longest:full,list:full     " behave like Bash completion
 set wildignore=*.o,*.pyc,*~,*.swp,*.bak " ignore on <Tab> completion
 
 " Tabs and indentation "
+set autoindent      " copy indent from current line when starting a new line
+set smarttab        " smarter tabs behaviour
 set noexpandtab     " use actual <Tab> for indentation
-set smarttab        "
 set tabstop=4       " size of <Tab> character (in spaces)
 set softtabstop=4   " number of spaces <Tab> counts for while doing <Tab>, <BS>
 set shiftwidth=4    " number of spaces to use for each step of (auto)indent
 set shiftround      " round indent to multiple of 'shiftwidth'
 
-" Folding settings "
+" Folding "
 set nofoldenable                " folds not enabled by default
 set foldmethod=indent           " indent based folding
 set foldmarker={,}              " treat { and } as markers
@@ -195,23 +201,23 @@ function! FoldToggle()  " fold toggle with setting foldcolumn
 	endif
 endfunction
 
-" Auto-completion settings "
+" Auto-completion "
+set complete-=i         " do not scan current and included files
 set completeopt=menuone,menu,longest,preview
 
 autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-" FileTypes settings "
+" Tags "
+setglobal tags=./tags;~/
 
+" Filetype-specific settings "
 autocmd FileType text,tex setlocal textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 
-" Tags setting "
-set tags=./tags;~/
-
-"== Shortcuts/commands settings =="
+"== Shortcuts/commands =="
 
 " \ev, \sv - quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -232,8 +238,10 @@ map  <silent> <F3>   <Esc>:call FoldToggle()<CR>
 imap <silent> <F3>   <C-O>:call FoldToggle()<CR>
 
 " F4 - toggle NERD_Tree
-map  <silent> <F4> <Esc>:NERDTreeToggle<CR>
-imap <silent> <F4> <C-O>:NERDTreeToggle<CR>
+if $USER != "root"
+	map  <silent> <F4> <Esc>:NERDTreeToggle<CR>
+	imap <silent> <F4> <C-O>:NERDTreeToggle<CR>
+endif
 
 " F5 - toggle paste-mode
 set pastetoggle=<F5>
@@ -270,17 +278,19 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 
 "== Plugin settings =="
 
-" NERD_Tree "
-let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
-let g:NERDTreeMouseMode = 3         " single click open any node (dir/file)
-let g:NERDTreeDirArrows = 1         " use arrows instead of old-school chars
-" ignore some non-editable files
-let g:NERDTreeIgnore = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
+if $USER != "root"
+	" NERD_Tree "
+	let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
+	let g:NERDTreeMouseMode         = 3 " single click open any node (dir/file)
+	let g:NERDTreeDirArrows         = 1 " use arrows instead of old-school chars
+	" ignore some non-editable files
+	let g:NERDTreeIgnore            = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
 
-" vim-arline "
-let g:airline_theme                      = 'dark'
-let g:airline_powerline_fonts            = 1
-let g:airline#extensions#tabline#enabled = 1
+	" vim-arline "
+	let g:airline_theme                      = 'dark'
+	let g:airline_powerline_fonts            = 1
+	let g:airline#extensions#tabline#enabled = 1
+endif
 
 "== Local settings =="
 if filereadable(glob("~/.vimrc_local"))
