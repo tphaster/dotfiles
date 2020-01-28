@@ -41,6 +41,7 @@ if $USER != "root"
 		Plug 'bling/vim-airline'
 		Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 		Plug 'tpope/vim-eunuch'
+		Plug 'tmux-plugins/vim-tmux'
 
 		" Editing
 		Plug 'tpope/vim-surround'
