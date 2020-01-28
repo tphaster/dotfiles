@@ -40,8 +40,11 @@ if $USER != "root"
 	call plug#begin('~/.vim/bundle')
 		Plug 'bling/vim-airline'
 		Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-eunuch'
+
+		" Editing
+		Plug 'tpope/vim-surround'
+		Plug 'vim-scripts/Smart-Tabs'
 
 		" Git
 		Plug 'tpope/vim-fugitive'
@@ -169,9 +172,7 @@ set autoindent      " copy indent from current line when starting a new line
 set smarttab        " smarter tabs behaviour
 set noexpandtab     " use actual <Tab> for indentation
 set tabstop=4       " size of <Tab> character (in spaces)
-set softtabstop=4   " number of spaces <Tab> counts for while doing <Tab>, <BS>
 set shiftwidth=4    " number of spaces to use for each step of (auto)indent
-set shiftround      " round indent to multiple of 'shiftwidth'
 
 " Folding "
 set nofoldenable                " folds not enabled by default
@@ -215,7 +216,7 @@ autocmd FileType text,tex setlocal textwidth=78 spell
 autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
-autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
+autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 
 "== Shortcuts/commands =="
 
