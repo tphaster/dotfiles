@@ -92,7 +92,7 @@ if has("gui_running")
     hi Directory      gui=NONE   guifg=#00ff8b   guibg=NONE
     hi LineNr         gui=NONE   guifg=#8b8bcd   guibg=#2e2e2e
     hi NonText        gui=BOLD   guifg=#8b8bcd   guibg=NONE
-    hi SpecialKey     gui=BOLD   guifg=#3b205d   guibg=NONE
+    hi SpecialKey     gui=BOLD   guifg=#d0d0d0   guibg=NONE
     hi Title          gui=BOLD   guifg=#af4f4b   guibg=NONE
     hi Visual         gui=NONE   guifg=#eeeeee   guibg=#4e4e8f
 
@@ -186,7 +186,7 @@ else
     exec "hi Directory      cterm=NONE   ctermfg=" . <SID>X(2) . " ctermbg=" . "NONE"
     exec "hi LineNr         cterm=BOLD   ctermfg=" . <SID>X(3) . " ctermbg=" . <SID>X(80)
     exec "hi NonText        cterm=BOLD   ctermfg=" . <SID>X(22) . " ctermbg=" . "NONE"
-    exec "hi SpecialKey     cterm=BOLD   ctermfg=" . <SID>X(18) . " ctermbg=" . "NONE"
+    exec "hi SpecialKey     cterm=BOLD   ctermfg=" . <SID>X(252) . " ctermbg=" . "NONE"
     exec "hi Title          cterm=BOLD   ctermfg=" . <SID>X(48) . " ctermbg=" . "NONE"
     exec "hi Visual         cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(38)
 
