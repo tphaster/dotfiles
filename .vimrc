@@ -252,6 +252,10 @@ set pastetoggle=<F5>
 map  <silent> <F6>    <Esc>:setlocal spell!<CR>
 imap <silent> <F6>    <C-O>:setlocal spell!<CR>
 
+" F7 - run make
+map  <silent> <F7>    <Esc>:make<CR>
+imap <silent> <F7>    <C-O>:make<CR>
+
 " Fast buffer switching
 map  <silent> <leader>.   <Esc>:bn<CR>
 imap <silent> <leader>.   <Esc>:bn<CR>
