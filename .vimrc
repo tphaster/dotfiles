@@ -130,7 +130,7 @@ endif
 
 " Set appropriate characters for :list command (utf-8 or ascii) "
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
-	set listchars=tab:►-,trail:⋅,extends:▷,precedes:◁,nbsp:~
+	set listchars=tab:►–,trail:⋅,extends:▷,precedes:◁,nbsp:~
 else
 	set listchars=tab:>-,trail:~,extends:>,precedes:<,nbsp:~
 endif
@@ -281,6 +281,8 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 "== Plugin settings =="
 
 if $USER != "root"
+	" Smart-Tabs "
+	let g:ctab_disable_checkalign = 1   " disable re-check of alignment
 	" NERD_Tree "
 	let g:NERDTreeCaseSensitiveSort = 1 " sort case-sensitively
 	let g:NERDTreeMouseMode         = 3 " single click open any node (dir/file)
