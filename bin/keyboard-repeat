@@ -3,10 +3,11 @@
 # keyboard-repeat, a script to change keyboard repeat settings in GNOME
 # Author: Tomasz Pieczerak (tph) <tphaster AT gmail.com>
 
-VERSION="0.1"
+VERSION="1.0"
 
 set -e
 
+# configuration
 SCHEMA="org.gnome.desktop.peripherals.keyboard"
 REPEAT_KEY="repeat"
 DELAY_KEY="delay"
