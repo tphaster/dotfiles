@@ -221,6 +221,9 @@ autocmd FileType xml,html,xhtml,css setlocal noexpandtab tabstop=2 shiftwidth=2 
 
 "== Shortcuts/commands =="
 
+" Do not enter Replace mode when <Insert> is pressed in Insert mode
+imap <Insert> <Nop>
+
 " \ev, \sv - quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
