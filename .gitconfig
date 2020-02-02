@@ -1,0 +1,14 @@
+[user]
+    name = Tomasz Pieczerak
+    email = tphaster@gmai"l.co"m
+[core]
+    editor = vim
+    pager = less -S
+[push]
+    default = current
+[color]
+    ui = true
+[merge]
+    tool = vimdiff
+[pull]
+	rebase = true
