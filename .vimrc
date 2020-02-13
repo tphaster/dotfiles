@@ -51,8 +51,14 @@ if $USER != "root"
 		Plug 'tpope/vim-fugitive'
 		Plug 'airblade/vim-gitgutter'
 
+		" Code
+		Plug 'vim-syntastic/syntastic'
+
 		" C++
-		Plug 'octol/vim-cpp-enhanced-highlight'
+		Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : 'cpp' }
+
+		" Python
+		Plug 'python-mode/python-mode', { 'for' : 'python', 'branch': 'develop' }
 	call plug#end()
 endif
 
@@ -205,7 +211,7 @@ endfunction
 
 " Auto-completion "
 set complete-=i         " do not scan current and included files
-set completeopt=menuone,menu,longest,preview
+set completeopt=menuone,menu,longest
 
 autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
@@ -218,6 +224,7 @@ autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
+autocmd FileType python setlocal nonumber
 
 "== Shortcuts/commands =="
 
@@ -301,6 +308,15 @@ if $USER != "root"
 	let g:airline_theme                      = 'dark'
 	let g:airline_powerline_fonts            = 1
 	let g:airline#extensions#tabline#enabled = 1
+
+	" syntastic "
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+
+	" python-mode "
+	let g:pymode_lint_on_write = 0
 endif
 
 "== Local settings =="
