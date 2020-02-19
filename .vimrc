@@ -53,6 +53,7 @@ if $USER != "root"
 
 		" Code
 		Plug 'vim-syntastic/syntastic'
+		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'vim'] }
 
 		" C++
 		Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : 'cpp' }
@@ -224,7 +225,7 @@ autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
-autocmd FileType python setlocal nonumber
+autocmd FileType c,cpp,python setlocal nonumber, colorcolumn=104
 
 "== Shortcuts/commands =="
 
