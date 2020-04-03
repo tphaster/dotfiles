@@ -1,14 +1,15 @@
 [user]
-    name = Tomasz Pieczerak
-    email = tphaster@gmai"l.co"m
+	name = Tomasz Pieczerak
+	email = tphaster@gmai"l.co"m
 [core]
-    editor = vim
-    pager = less -S
+	editor = vim
+	pager = less -S
+	excludesfile = ~/.gitignore_global
 [push]
-    default = current
+	default = current
 [color]
-    ui = true
+	ui = true
 [merge]
-    tool = vimdiff
+	tool = vimdiff
 [pull]
 	rebase = true
