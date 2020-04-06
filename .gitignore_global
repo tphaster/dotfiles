@@ -1,2 +1,3 @@
 *.swp
 tags
+compile_commands.json
