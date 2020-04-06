@@ -54,6 +54,7 @@ if $USER != "root"
 		" Code
 		Plug 'vim-syntastic/syntastic'
 		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'vim'] }
+		Plug 'rhysd/vim-clang-format', { 'for' : ['c', 'cpp'] }
 
 		" C++
 		Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : 'cpp' }
@@ -267,6 +268,7 @@ imap <silent> <F6>    <C-O>:setlocal spell!<CR>
 map  <silent> <F7>    <Esc>:make<CR>
 imap <silent> <F7>    <C-O>:make<CR>
 
+" F12 - run clang-format (for c/cpp files)
 " Fast buffer switching
 map  <silent> <leader>.   <Esc>:bn<CR>
 imap <silent> <leader>.   <Esc>:bn<CR>
@@ -292,6 +294,12 @@ imap <silent> <leader>8   <Esc>:b8<CR>
 map  <silent> <leader>9   <Esc>:b9<CR>
 imap <silent> <leader>9   <Esc>:b9<CR>
 
+" Close file without closing a buffer
+nmap ,d :b#<bar>bd#<CR>
+
+" Filetype-specific shortcuts/commands "
+autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 "== Plugin settings =="
 
