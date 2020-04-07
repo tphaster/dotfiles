@@ -8,6 +8,8 @@ scriptencoding utf-8
 "== General settings =="
 
 set nocompatible    " make Vim behave in a more useful way (and no Vi-compatile)
+set exrc            " source .vimrc/.exrc file from the current directory
+set secure          " autocmd/shell/write commands are not allowed in the above file
 
 " Mouse settings "
 set mouse=a         " enable the use of the mouse in all modes
@@ -226,7 +228,7 @@ autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
-autocmd FileType c,cpp,python setlocal nonumber colorcolumn=104
+autocmd FileType c,cpp,python setlocal nonumber
 
 "== Shortcuts/commands =="
 
