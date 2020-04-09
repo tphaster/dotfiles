@@ -32,7 +32,7 @@ endif
 
 
 " == Plugins == "
-if $USER != "root"
+if has('unix') && $USER != "root"
 	if empty(glob('~/.vim/autoload/plug.vim'))
 		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 			\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -228,7 +228,7 @@ autocmd FileType help setlocal nospell
 autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
-autocmd FileType c,cpp,python setlocal nonumber
+autocmd FileType c,cpp,python setlocal nonumber textwidth=0
 
 "== Shortcuts/commands =="
 
@@ -254,7 +254,7 @@ map  <silent> <F3>   <Esc>:call FoldToggle()<CR>
 imap <silent> <F3>   <C-O>:call FoldToggle()<CR>
 
 " F4 - toggle NERD_Tree
-if $USER != "root"
+if has('unix') && $USER != "root"
 	map  <silent> <F4> <Esc>:NERDTreeToggle<CR>
 	imap <silent> <F4> <C-O>:NERDTreeToggle<CR>
 endif
@@ -270,7 +270,6 @@ imap <silent> <F6>    <C-O>:setlocal spell!<CR>
 map  <silent> <F7>    <Esc>:make<CR>
 imap <silent> <F7>    <C-O>:make<CR>
 
-" F12 - run clang-format (for c/cpp files)
 " Fast buffer switching
 map  <silent> <leader>.   <Esc>:bn<CR>
 imap <silent> <leader>.   <Esc>:bn<CR>
@@ -299,13 +298,9 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 " Close file without closing a buffer
 nmap ,d :b#<bar>bd#<CR>
 
-" Filetype-specific shortcuts/commands "
-autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
-
 "== Plugin settings =="
 
-if $USER != "root"
+if has('unix') && $USER != "root"
 	" Smart-Tabs "
 	let g:ctab_disable_checkalign = 1   " disable re-check of alignment
 	" NERD_Tree "
@@ -327,8 +322,15 @@ if $USER != "root"
 	let g:syntastic_check_on_wq = 0
 	let g:syntastic_enable_highlighting = 1
 
+	" YouCompleteMe "
+	let g:ycm_key_list_stop_completion = [ '<C-y>', '<Enter>' ]
+
 	" python-mode "
 	let g:pymode_lint_on_write = 0
+
+	" clang-format "
+	autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+	autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 endif
 
 "== Local settings =="
