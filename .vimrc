@@ -55,7 +55,7 @@ if has('unix') && $USER != "root"
 
 		" Code
 		Plug 'vim-syntastic/syntastic'
-		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'vim'] }
+		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'python'] }
 		Plug 'rhysd/vim-clang-format', { 'for' : ['c', 'cpp'] }
 
 		" C++
@@ -229,6 +229,7 @@ autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 autocmd FileType c,cpp,python setlocal nonumber textwidth=0
+autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
 "== Shortcuts/commands =="
 
@@ -310,7 +311,7 @@ if has('unix') && $USER != "root"
 	" ignore some non-editable files
 	let g:NERDTreeIgnore            = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
 
-	" vim-arline "
+	" vim-airline "
 	let g:airline_theme                      = 'dark'
 	let g:airline_powerline_fonts            = 1
 	let g:airline#extensions#tabline#enabled = 1
