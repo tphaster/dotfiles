@@ -50,13 +50,14 @@ if has('unix') && $USER != "root"
 		Plug 'vim-scripts/Smart-Tabs'
 
 		" Git
-		Plug 'tpope/vim-fugitive'
+		"Plug 'tpope/vim-fugitive'
 		Plug 'airblade/vim-gitgutter'
 
 		" Code
 		Plug 'vim-syntastic/syntastic'
 		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'python'] }
 		Plug 'rhysd/vim-clang-format', { 'for' : ['c', 'cpp'] }
+		Plug 'craigemery/vim-autotag', { 'for' : ['c', 'cpp', 'python'] }
 
 		" C++
 		Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : 'cpp' }
@@ -299,6 +300,11 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 " Close file without closing a buffer
 nmap ,d :b#<bar>bd#<CR>
 
+" Tags shortcuts
+nnoremap <leader>] <C-]>
+nnoremap <leader>[ <C-T>
+nnoremap <leader>p g]
+
 "== Plugin settings =="
 
 if has('unix') && $USER != "root"
@@ -325,6 +331,7 @@ if has('unix') && $USER != "root"
 	let g:syntastic_enable_highlighting = 1
 
 	" YouCompleteMe "
+	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 	let g:ycm_key_list_stop_completion = [ '<C-y>', '<Enter>' ]
 
 	" python-mode "
