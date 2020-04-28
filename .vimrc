@@ -315,7 +315,8 @@ if has('unix') && $USER != "root"
 	let g:NERDTreeMouseMode         = 3 " single click open any node (dir/file)
 	let g:NERDTreeDirArrows         = 1 " use arrows instead of old-school chars
 	" ignore some non-editable files
-	let g:NERDTreeIgnore            = ['\~$', '\.o$', '\.lo$', '^moc_', '^ui_']
+	let g:NERDTreeIgnore = [ '\~$', '\.o$', '\.lo$', '^moc_', '^ui_',
+						   \ '\.gcda$', '\.gcno$', '\.trs$', '\.la$']
 
 	" vim-airline "
 	let g:airline_theme                      = 'dark'

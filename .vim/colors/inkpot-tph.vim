@@ -77,10 +77,10 @@ if has("gui_running")
     hi MBEVisibleNormal          guifg=#cfcfcd   guibg=#4e4e8f
     hi MBEVisibleChanged         guifg=#eeeeee   guibg=#4e4e8f
 
-    hi DiffText       gui=NONE   guifg=#ffffcd   guibg=#4a2a4a
-    hi DiffChange     gui=NONE   guifg=#ffffcd   guibg=#306b8f
-    hi DiffDelete     gui=NONE   guifg=#ffffcd   guibg=#6d3030
-    hi DiffAdd        gui=NONE   guifg=#ffffcd   guibg=#306d30
+    hi DiffText       gui=NONE   guifg=#00ff00   guibg=#000000
+    hi DiffChange     gui=NONE   guifg=#5f00d7   guibg=#000000
+    hi DiffDelete     gui=NONE   guifg=#ff0000   guibg=#000000
+    hi DiffAdd        gui=NONE   guifg=#00ff00   guibg=#000000
 
     hi Cursor         gui=NONE   guifg=#404040   guibg=#8b8bff
     hi lCursor        gui=NONE   guifg=#404040   guibg=#8fff8b
@@ -175,10 +175,10 @@ else
     exec "hi MBEVisibleActiveNormal     cterm=BOLD  ctermfg=" . <SID>X(77) . " ctermbg=" . <SID>X(81)
     exec "hi MBEVisibleActiveChanged    cterm=BOLD  ctermfg=" . <SID>X(77) . " ctermbg=" . <SID>X(81)
 
-    exec "hi DiffText       cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(34)
-    exec "hi DiffChange     cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(17)
-    exec "hi DiffDelete     cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(32)
-    exec "hi DiffAdd        cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(20)
+    exec "hi DiffText       cterm=NONE   ctermfg=" . <SID>X(10) . " ctermbg=" . "NONE"
+    exec "hi DiffChange     cterm=NONE   ctermfg=" . <SID>X(55) . " ctermbg=" . "NONE"
+    exec "hi DiffDelete     cterm=NONE   ctermfg=" . <SID>X(1)  . " ctermbg=" . "NONE"
+    exec "hi DiffAdd        cterm=NONE   ctermfg=" . <SID>X(40) . " ctermbg=" . "NONE"
 
     exec "hi Folded         cterm=NONE   ctermfg=" . <SID>X(79) . " ctermbg=" . <SID>X(35)
     exec "hi FoldColumn     cterm=BOLD   ctermfg=" . <SID>X(35) . " ctermbg=" . <SID>X(80)

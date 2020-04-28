@@ -3,7 +3,7 @@
 	email = tphaster@gmai"l.co"m
 [core]
 	editor = vim
-	pager = less -S
+	pager = less -S -x1,5
 	excludesfile = ~/.gitignore_global
 [push]
 	default = current
