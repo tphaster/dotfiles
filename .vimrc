@@ -278,6 +278,11 @@ imap <silent> <leader>.   <Esc>:bn<CR>
 map  <silent> <leader>,   <Esc>:bp<CR>
 imap <silent> <leader>,   <Esc>:bp<CR>
 
+map  <silent> <C-PageUp>     <Esc>:bn<CR>
+imap <silent> <C-PageUp>     <Esc>:bn<CR>
+map  <silent> <C-PageDown>   <Esc>:bp<CR>
+imap <silent> <C-PageDown>   <Esc>:bp<CR>
+
 map  <silent> <leader>1   <Esc>:b1<CR>
 imap <silent> <leader>1   <Esc>:b1<CR>
 map  <silent> <leader>2   <Esc>:b2<CR>
