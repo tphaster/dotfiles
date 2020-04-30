@@ -70,9 +70,17 @@ endif
 
 " == Other settings == "
 
-" fix &term variable if 'screen' or other program changed it
-if &term == "screen-bce" || &term == "screen" || &term == "xterm"
+" ensure &term has 256color mode enabled
+if &term == "xterm"
 	let &term = "xterm-256color"
+endif
+
+if &term == "screen"
+	let &term = "screen-256color"
+endif
+
+if &term == "screen-bce"
+	let &term = "screen-256color-bce"
 endif
 
 " Set color scheme "
@@ -278,10 +286,17 @@ imap <silent> <leader>.   <Esc>:bn<CR>
 map  <silent> <leader>,   <Esc>:bp<CR>
 imap <silent> <leader>,   <Esc>:bp<CR>
 
-map  <silent> <C-PageUp>     <Esc>:bn<CR>
-imap <silent> <C-PageUp>     <Esc>:bn<CR>
-map  <silent> <C-PageDown>   <Esc>:bp<CR>
-imap <silent> <C-PageDown>   <Esc>:bp<CR>
+if &term =~ "^screen"
+	map   [5;5~   <Esc>:bn<CR>
+	imap  [5;5~   <Esc>:bn<CR>
+	map   [6;5~   <Esc>:bp<CR>
+	imap  [6;5~   <Esc>:bp<CR>
+else
+	map  <silent> <C-PageUp>    <Esc>:bn<CR>
+	imap <silent> <C-PageUp>    <Esc>:bn<CR>
+	map  <silent> <C-PageDown>  <Esc>:bp<CR>
+	imap <silent> <C-PageDown>  <Esc>:bp<CR>
+endif
 
 map  <silent> <leader>1   <Esc>:b1<CR>
 imap <silent> <leader>1   <Esc>:b1<CR>
