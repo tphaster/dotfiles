@@ -32,6 +32,7 @@ endif
 
 
 " == Plugins == "
+
 if has('unix') && $USER != "root"
 	if empty(glob('~/.vim/autoload/plug.vim'))
 		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -68,22 +69,8 @@ if has('unix') && $USER != "root"
 endif
 
 
-" == Other settings == "
+" == Color scheme == "
 
-" ensure &term has 256color mode enabled
-if &term == "xterm"
-	let &term = "xterm-256color"
-endif
-
-if &term == "screen"
-	let &term = "screen-256color"
-endif
-
-if &term == "screen-bce"
-	let &term = "screen-256color-bce"
-endif
-
-" Set color scheme "
 if &term == "linux"     " probably this is a very primitive terminal
 	set background=dark
 else

@@ -116,6 +116,8 @@ color_terminals=
 
 screen-256color=
 
+screen.xterm-256color=
+
 [Panels]
 show_mini_info=true
 kilobyte_si=false
