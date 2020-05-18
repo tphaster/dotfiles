@@ -49,6 +49,7 @@ if has('unix') && $USER != "root"
 		" Editing
 		Plug 'tpope/vim-surround'
 		Plug 'vim-scripts/Smart-Tabs'
+		Plug 'eugen0329/vim-esearch'
 
 		" Git
 		"Plug 'tpope/vim-fugitive'
@@ -323,7 +324,7 @@ if has('unix') && $USER != "root"
 	let g:NERDTreeDirArrows         = 1 " use arrows instead of old-school chars
 	" ignore some non-editable files
 	let g:NERDTreeIgnore = [ '\~$', '\.o$', '\.lo$', '^moc_', '^ui_',
-						   \ '\.gcda$', '\.gcno$', '\.trs$', '\.la$']
+							\'\.gcda$', '\.gcno$', '\.trs$', '\.la$']
 
 	" vim-airline "
 	let g:airline_theme                      = 'dark'
