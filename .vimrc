@@ -332,6 +332,9 @@ if has('unix') && $USER != "root"
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
+	" vim-gitgutter "
+	highlight! link SignColumn LineNr
+
 	" syntastic "
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_auto_loc_list = 2
@@ -342,6 +345,9 @@ if has('unix') && $USER != "root"
 	" YouCompleteMe "
 	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 	let g:ycm_key_list_stop_completion = [ '<C-y>', '<Enter>' ]
+	let g:ycm_auto_hover = ""
+	nmap <silent> <leader>d <plug>(YCMHover)
+	imap <silent> <leader>d <Esc><plug>(YCMHover)
 
 	" python-mode "
 	let g:pymode_lint_on_write = 0
