@@ -1,6 +1,7 @@
 .vimrc
 .exrc
 *.swp
+*.swo
 tags
 compile_commands.json
 .clangd

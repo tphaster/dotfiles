@@ -226,7 +226,7 @@ autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 autocmd FileType c,cpp,python setlocal nonumber textwidth=0
-autocmd FileType gitcommit exec 'au VimEnter * startinsert'
+autocmd FileType gitcommit exec "au! VimEnter * exec 'normal! gg' | startinsert!"
 
 "== Shortcuts/commands =="
 
@@ -308,9 +308,18 @@ imap <silent> <leader>9   <Esc>:b9<CR>
 " Close file without closing a buffer
 nmap ,d :b#<bar>bd#<CR>
 
-" Tags shortcuts
-nnoremap <leader>] <C-]>
-nnoremap <leader>[ <C-T>
+" Tags shortcuts "
+
+" \] - jump to tag definition
+nnoremap <leader>]  <C-]>
+
+" \' - jump to second tag definition (declaration)
+nnoremap <leader>' 2<C-]>
+
+" \[ - go back on the tag stack
+nnoremap <leader>[  <C-T>
+
+" \p - list all tag definitions
 nnoremap <leader>p g]
 
 "== Plugin settings =="
