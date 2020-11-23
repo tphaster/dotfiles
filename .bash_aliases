@@ -20,6 +20,7 @@ fi
 alias bc='bc -l -q'
 alias screen='screen -U'
 alias dgit='/usr/bin/git --git-dir=$HOME/.dotfiles/'
+alias docker-run-pwd='docker run -v $PWD:$PWD --workdir "$PWD" --user $(id -u):$(id -g) --rm'
 alias gitg='GTK_THEME=Adwaita:light gitg 2>/dev/null'
 alias tm='tmux new-session mc'
 alias tmv='tmux new-session mc \; new-window vim \; select-window -t 1'
