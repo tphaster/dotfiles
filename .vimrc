@@ -5,6 +5,7 @@
 
 scriptencoding utf-8
 
+
 "== General settings =="
 
 set nocompatible    " make Vim behave in a more useful way (and no Vi-compatile)
@@ -15,6 +16,10 @@ set secure          " autocmd/shell/write commands are not allowed in the above 
 set mouse=a         " enable the use of the mouse in all modes
 set ttymouse=xterm2 " enable mouse for XTerm terminals
 
+" fix modifyOtherKeys
+if has("patch-8.1-2134")
+	set t_TI= t_TE=
+endif
 
 "== Language and encoding =="
 
@@ -29,7 +34,6 @@ if empty(system("locale -a | grep -i C.UTF-8"))
 else
 	language messages C.UTF-8
 endif
-
 
 " == Plugins == "
 
