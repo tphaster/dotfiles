@@ -230,6 +230,9 @@ autocmd FileType svn,*commit* setlocal spell
 autocmd FileType svn,*commit* call setpos('.', [0, 1, 1, 0])
 autocmd FileType xml,html,xhtml,css,php setlocal noexpandtab tabstop=2 shiftwidth=2 textwidth=78 formatoptions-=t spell
 autocmd FileType c,cpp,python setlocal nonumber textwidth=0
+autocmd FileType c,cpp set comments-=://
+autocmd FileType c,cpp set comments+=:///
+autocmd FileType c,cpp set comments+=://
 autocmd FileType gitcommit exec "au! VimEnter * exec 'normal! gg' | startinsert!"
 
 "== Shortcuts/commands =="
