@@ -9,12 +9,13 @@ use_internal_edit=false
 clear_before_exec=true
 confirm_delete=true
 confirm_overwrite=true
-confirm_execute=false
+confirm_execute=true
 confirm_history_cleanup=true
 confirm_exit=false
 confirm_directory_hotlist_delete=false
 confirm_view_dir=false
-safe_delete=false
+safe_delete=true
+safe_overwrite=true
 use_8th_bit_as_meta=false
 mouse_move_pages_viewer=true
 mouse_close_dialog=false
@@ -61,6 +62,7 @@ editor_group_undo=true
 editor_state_full_filename=true
 editor_ask_filename_before_edit=false
 nice_rotating_dash=true
+shadows=true
 mcview_remember_file_position=false
 auto_fill_mkdir_name=true
 copymove_persistent_attr=true
@@ -81,21 +83,21 @@ editor_backup_extension=~
 editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
-skin=default
+skin=yadt256-defbg
 
 [Layout]
-message_visible=0
-keybar_visible=1
-xterm_title=1
 output_lines=0
-command_prompt=1
-menubar_visible=1
-free_space=1
-horizontal_split=0
-vertical_equal=1
 left_panel_size=106
-horizontal_equal=1
-top_panel_size=1
+top_panel_size=0
+message_visible=true
+keybar_visible=true
+xterm_title=true
+command_prompt=true
+menubar_visible=true
+free_space=true
+horizontal_split=false
+vertical_equal=true
+horizontal_equal=true
 
 [Misc]
 timeformat_recent=%b %e %H:%M
@@ -113,8 +115,6 @@ clipboard_paste=
 base_color=
 xterm-256color=
 color_terminals=
-
-screen-256color=
 
 [Panels]
 show_mini_info=true

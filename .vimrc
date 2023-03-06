@@ -179,6 +179,8 @@ set wildmenu                            " choose from menu
 set wildmode=longest:full,list:full     " behave like Bash completion
 set wildignore=*.o,*.pyc,*~,*.swp,*.bak " ignore on <Tab> completion
 
+let c_space_errors = 1  " highlight unwanted whitespaces
+
 " Tabs and indentation "
 set autoindent      " copy indent from current line when starting a new line
 set smarttab        " smarter tabs behaviour
