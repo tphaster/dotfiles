@@ -6,8 +6,7 @@
 	$ sudo apt install \
 		cowsay fortunes sl
 	$ sudo apt install \
-		automake build-essential ca-certificates cmake cmake-qt-gui libtool \
-		ninja-build pkg-config
+		automake build-essential ca-certificates cmake cmake-qt-gui libtool ninja-build pkg-config
 	$ sudo apt install \
 		python3-dev python3-pip python3-setuptools python3-venv
 	$ sudo apt install \
@@ -16,20 +15,19 @@
 
 ## Install packages for GNOME/Ubuntu
 	$ sudo apt install \
-		dconf-editor gnome-icon-theme gnome-shell-extension-manager gnome-tweaks \
-		papirus-icon-theme ubuntu-restricted-extras
+		dconf-editor gnome-icon-theme gnome-shell-extension-manager gnome-tweaks papirus-icon-theme ubuntu-restricted-extras
 
-# Install terminal powerline fonts
+## Install terminal powerline fonts
 Download fonts from https://github.com/powerline/fonts/tree/master/DejaVuSansMono
 
 	$ mkdir ~/.fonts
 	$ cp *.ttf ~/.fonts
 	$ fc-cache -f -v
 
-# Install Tmux Plugin Manager:
+## Install Tmux Plugin Manager:
 	$ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# Compile YouCompleteMe for Vim:
+## Compile YouCompleteMe for Vim:
 	$ cd ~/.vim/bundle/YouCompleteMe/
 	$ git submodule update --init --recursive
 	$ python3 install.py --clang-completer
