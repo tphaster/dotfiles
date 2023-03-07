@@ -1,7 +1,0 @@
-$ cd $HOME
-$ git clone --no-checkout <repo url> $(pwd)
-$ mv .git .dotfiles
-$ cd .dotfiles
-$ git config core.worktree ".."
-$ git config status.showuntrackedfiles no
-$ git reset --hard
