@@ -17,12 +17,12 @@
 	$ sudo apt install \
 		dconf-editor gnome-icon-theme gnome-shell-extension-manager gnome-tweaks papirus-icon-theme ubuntu-restricted-extras
 
-## Install terminal powerline fonts
-Download fonts from https://github.com/powerline/fonts/tree/master/DejaVuSansMono
-
-	$ mkdir ~/.fonts
-	$ cp *.ttf ~/.fonts
-	$ fc-cache -f -v
+## Install terminal fonts
+	$ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/DejaVuSansMono.zip
+	$ unzip -d DejaVuSansMono DejaVuSansMono.zip
+	$ mkdir ~/.local/share/fonts
+	$ cp DejaVuSansMono/*Mono.ttf ~/.local/share/fonts
+	$ fc-cache -vf ~/.local/share/fonts
 
 ## Install Tmux Plugin Manager:
 	$ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
