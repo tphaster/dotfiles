@@ -2,7 +2,7 @@
 	name = Tomasz Pieczerak
 	email = tphaster@gmai"l.co"m
 [core]
-	editor = vim
+	editor = nvim
 	pager = less -S -x1,5
 	excludesfile = ~/.gitignore_global
 [push]

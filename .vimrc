@@ -47,7 +47,6 @@ if has('unix') && $USER != "root"
 	call plug#begin('~/.vim/bundle')
 		Plug 'bling/vim-airline'
 		Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-		Plug 'tpope/vim-eunuch'
 		Plug 'tmux-plugins/vim-tmux'
 
 		" Editing
@@ -56,7 +55,6 @@ if has('unix') && $USER != "root"
 		Plug 'eugen0329/vim-esearch'
 
 		" Git
-		"Plug 'tpope/vim-fugitive'
 		Plug 'airblade/vim-gitgutter'
 
 		" Code

@@ -29,6 +29,7 @@ alias docker-cmake-build='docker run -v $PWD/..:$PWD/.. --workdir "$PWD" --user 
 alias gitg='GTK_THEME=Adwaita:light gitg 2>/dev/null'
 alias tm='tmux new-session mc'
 alias tmv='tmux new-session mc \; new-window vim \; select-window -t 1'
+alias tmnv='tmux new-session mc \; new-window nvim \; select-window -t 1'
 alias vimrc='vim $HOME/.vimrc'
 
 # vim: set ft=sh :
