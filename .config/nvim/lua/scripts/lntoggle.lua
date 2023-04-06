@@ -3,20 +3,13 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-augroup("lntoggle", {})
+augroup("lntoggle", { clear = true })
 
 local function isInVisualMode()
   local currentMode = vim.api.nvim_get_mode().mode
   local match = string.match(currentMode, "[vV\x16]*")
   return (match ~= "" and match ~= nil)
 end
-
--- autocmd("ModeChanged", {
---   pattern = "*:*",
---   callback = function()
---     print("Mode changed: " .. vim.v.event.old_mode .. " -> " .. vim.v.event.new_mode)
---   end,
--- })
 
 autocmd("ModeChanged", {
   pattern = "*:[vV\x16]*",

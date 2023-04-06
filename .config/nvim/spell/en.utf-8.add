@@ -20,3 +20,8 @@ chk
 CANopen
 N7
 N7S
+Neovim
+autocmds
+augroup
+nvim
+lua
