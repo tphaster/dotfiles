@@ -12,15 +12,6 @@ autocmd("FileType", {
   group = "CommentString",
 })
 
-augroup("WafScriptFt", { clear = true })
-autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = "wscript*",
-  callback = function()
-    vim.bo.filetype = "python"
-  end,
-  group = "WafScriptFt",
-})
-
 augroup("CommitEditMsg", { clear = true })
 autocmd("FileType", {
   pattern = { "svn", "*commit*" },

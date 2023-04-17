@@ -25,3 +25,7 @@ autocmds
 augroup
 nvim
 lua
+filetype
+autocommand
+autocommands
+filetypes
