@@ -30,3 +30,6 @@ autocommand
 autocommands
 filetypes
 whitespace
+ESO
+ELT
+vimwiki

@@ -3,6 +3,14 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+augroup("NewFileStartInsert", { clear = true })
+autocmd("BufNewFile", {
+  callback = function()
+    vim.cmd("startinsert")
+  end,
+  group = "NewFileStartInsert",
+})
+
 augroup("CommentString", { clear = true })
 autocmd("FileType", {
   pattern = { "c", "cpp" },
