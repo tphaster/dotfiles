@@ -3,8 +3,8 @@ return {
   lazy = false,
   config = function()
     require("cutlass").setup({
-      cut_key = "m",
       override_del = true,
+      exclude = { "nd", "nD", "xd", "xD" },
     })
   end,
 }
