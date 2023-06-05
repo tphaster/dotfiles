@@ -19,3 +19,5 @@ map("i", "<F2>", "<Esc><cmd>setlocal list!<cr>", { silent = true })
 
 map("n", "<F6>", "<cmd>setlocal spell!<cr>", { silent = true })
 map("i", "<F6>", "<Esc><cmd>setlocal spell!<cr>", { silent = true })
+
+map("n", "gs", "<cmd>ClangdSwitchSourceHeader<cr>", { silent = true })
