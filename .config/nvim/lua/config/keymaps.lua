@@ -1,6 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 
 local map = vim.keymap.set
+local unmap = vim.keymap.del
 
 map("i", "<Insert>", "<Nop>")
 
@@ -21,3 +22,9 @@ map("n", "<F6>", "<cmd>setlocal spell!<cr>", { silent = true })
 map("i", "<F6>", "<Esc><cmd>setlocal spell!<cr>", { silent = true })
 
 map("n", "gs", "<cmd>ClangdSwitchSourceHeader<cr>", { silent = true })
+
+-- disable terminal mappings that are in conflict with LazyGit
+unmap("t", "<C-k>")
+unmap("t", "<C-j>")
+unmap("t", "<C-h>")
+unmap("t", "<C-l>")
