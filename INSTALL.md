@@ -22,8 +22,8 @@
 	$ tar xf lazygit.tar.gz lazygit
 	$ install lazygit ~/.local/bin
 
-	$ wget - https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
-	$ sudo dpkg -i nvim-linux64.deb
+	$ wget - https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+	$ install nvim.appimage ~/.local/bin/nvim
 
 ## Install packages for GNOME/Ubuntu
 	$ sudo apt install \
@@ -38,8 +38,3 @@
 
 ## Install Tmux Plugin Manager:
 	$ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-## Compile YouCompleteMe for Vim:
-	$ cd ~/.vim/bundle/YouCompleteMe/
-	$ git submodule update --init --recursive
-	$ python3 install.py --clang-completer
