@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# update-nvim, a script to update local NeoVim installation
+# Author: Tomasz Pieczerak (tph) <tphaster AT gmail.com>
+
+VERSION="1.0"
+
+set -e
+
+# configuration
+INSTALL_DIR="~/.local/bin"
+NVIM_RELEASE="stable"
+
+# display usage info function
+usage(){
+    cat 1>&2 <<EOT
+Usage: `basename $0`
+
+Try '`basename $0` --help' for more options.
+EOT
+}
+
+# check number of arguments
+if [ $# -gt 0 ]; then
+    echo "`basename $0`: no OPTIONs available" 1>&2
+    usage
+    exit 1
+fi
+
+# display help on '-h' or '--help' option
+if [ "x$1" = "x--help" -o "x$1" = "x-h" ]; then
+    cat <<EOT
+update-nvim $VERSION, a script to update local NeoVim installation
+
+Usage: `basename $0` [OPTION]
+
+Startup:
+    -V, --version   display the version of script and exit.
+    -h, --help      print this help.
+
+Mail bug reports and suggestions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+# print program version on '-V' or '--version' option
+if [ "x$1" = "x--version" -o "x$1" = "x-V" ]; then
+    cat <<EOT
+update-nvim $VERSION
+
+Copyright (C) 2019 Tomasz Pieczerak
+License GPLv3+: GNU GPL version 3 or later
+<http://www.gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written and maintained by Tomasz Pieczerak (tph) <tphaster AT gmail.com>.
+Please send bug reports and questions to <tphaster AT gmail.com>.
+EOT
+    exit 0
+fi
+
+echo "Downloading latest stable NeoVim release... "
+wget -nv -- https://github.com/neovim/neovim/releases/download/${NVIM_RELEASE}/nvim.appimage 2>&1 >/dev/null
+echo "Done."
+
+echo -n "Installing binary in ${INSTALL_DIR}... "
+install nvim.appimage ~/.local/bin/nvim
+echo "Done."
+echo
+
+# Clean up
+rm -f nvim.appimage
+
+echo -n "Installed "; nvim --version | sed -n 1p
