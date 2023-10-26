@@ -5,7 +5,6 @@ return {
     diagnostics = {
       virtual_text = false,
     },
-    autoformat = false,
     servers = {
       jsonls = { mason = false },
       clangd = {

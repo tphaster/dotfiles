@@ -1,6 +1,9 @@
 -- Options are automatically loaded before lazy.nvim startup
 
+local g = vim.g
 local opt = vim.opt
+
+g.autoformat = false -- disable auto formatting
 
 opt.relativenumber = false -- relative line numbers
 
