@@ -6,6 +6,7 @@ local opt = vim.opt
 g.autoformat = false -- disable auto formatting
 
 opt.relativenumber = false -- relative line numbers
+g.editorconfig = true -- enable .editorconfig support
 
 opt.spelllang = { "en", "pl" } -- Polish/English spell checking
 
