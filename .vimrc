@@ -50,21 +50,11 @@ if has('unix') && $USER != "root"
 		Plug 'tmux-plugins/vim-tmux'
 
 		" Editing
-		Plug 'tpope/vim-surround'
 		Plug 'vim-scripts/Smart-Tabs'
 		Plug 'eugen0329/vim-esearch'
 
 		" Git
 		Plug 'airblade/vim-gitgutter'
-
-		" Code
-		Plug 'vim-syntastic/syntastic'
-		Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer', 'for' : ['c', 'cpp', 'bash', 'python'] }
-		Plug 'rhysd/vim-clang-format', { 'for' : ['c', 'cpp'] }
-		Plug 'craigemery/vim-autotag', { 'for' : ['c', 'cpp', 'python'] }
-
-		" C++
-		Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : 'cpp' }
 
 		" Python
 		Plug 'python-mode/python-mode', { 'for' : 'python', 'branch': 'develop' }
@@ -351,26 +341,8 @@ if has('unix') && $USER != "root"
 	" vim-gitgutter "
 	highlight! link SignColumn LineNr
 
-	" syntastic "
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 2
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 0
-	let g:syntastic_enable_highlighting = 1
-
-	" YouCompleteMe "
-	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-	let g:ycm_key_list_stop_completion = [ '<C-y>', '<Enter>' ]
-	let g:ycm_auto_hover = ""
-	nmap <silent> <leader>d <plug>(YCMHover)
-	imap <silent> <leader>d <Esc><plug>(YCMHover)
-
 	" python-mode "
 	let g:pymode_lint_on_write = 0
-
-	" clang-format "
-	autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-	autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 endif
 
 "== Local settings =="
