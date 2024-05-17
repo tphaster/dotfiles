@@ -1,5 +1,4 @@
 return {
   { "folke/flash.nvim", enabled = false },
-  { "echasnovski/mini.surround", enabled = false },
-  { "echasnovski/mini.ai", enabled = false },
+  { "nvim-treesitter/nvim-treesitter-textobjects", enabled = false },
 }
