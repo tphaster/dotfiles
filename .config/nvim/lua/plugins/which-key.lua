@@ -4,6 +4,5 @@ return {
     plugins = {
       presets = { operators = false },
     },
-    operators = {},
   },
 }
