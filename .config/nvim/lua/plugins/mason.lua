@@ -7,6 +7,9 @@ return {
       "shfmt",
       "flake8",
       "clangd",
+      "lua-language-server",
+      "python-lsp-server",
+      "marksman",
     },
   },
 }
